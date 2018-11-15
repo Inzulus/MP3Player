@@ -26,6 +26,7 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
 
         VBox topPane = new VBox();
+
         topPane.setAlignment(Pos.BASELINE_CENTER);
         Label lSongTitle = new Label("SongTitle");
         Label lSongInterpret = new Label("SongInterpret");
