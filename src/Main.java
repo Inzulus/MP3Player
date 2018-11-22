@@ -21,9 +21,14 @@ public class Main extends Application {
         InfoBox ibox = new InfoBox();
         ButtonBar bBar = new ButtonBar();
         CoverBox cBox = new CoverBox();
+        SongSlider sSlider = new SongSlider();
+
+        VBox playBox = new VBox();
+        playBox.getChildren().addAll(bBar.create(),sSlider.create());
+        playBox.setPadding(new Insets(5));
 
 
-        root.setBottom(bBar.create());
+        root.setBottom(playBox);
         root.setCenter(cBox.create());
         root.setTop(ibox.create());
 
