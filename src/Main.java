@@ -23,34 +23,8 @@ public class Main extends Application {
         CoverBox cBox = new CoverBox();
 
 
-        HBox rightPane = new HBox();
-        rightPane.setStyle("-fx-background-color: rgb(30,30,30);");
-        Label lRight = new Label("Right");
-        HBox.setMargin(lRight, new Insets(5));
-        rightPane.getChildren().add(lRight);
-
-        HBox bottomPane = new HBox();
-        //bottomPane.setStyle("-fx-background-color: rgb(60,60,60);");
-        //Label lLeft = new Label("Left");
-        //HBox.setMargin(lLeft, new Insets(5));
-        Slider slider = new Slider();
-        slider.setMin(0);
-        slider.setMax(100);
-        slider.setValue(40);
-        bottomPane.getChildren().add(slider);
-
-        HBox leftPane = new HBox();
-        leftPane.setStyle("-fx-background-color: rgb(90,90,90);");
-
-        HBox viewPane = new HBox();
-        //Image image = new Image(getClass().getResourceAsStream("Small-mario.png"));
-        //ImageView imageView = new ImageView(image);
-        //viewPane.getChildren().add(imageView);
-
         root.setBottom(bBar.create());
         root.setCenter(cBox.create());
-        root.setLeft(leftPane);
-        root.setRight(rightPane);
         root.setTop(ibox.create());
 
 

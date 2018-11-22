@@ -3,20 +3,31 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class CoverBox {
 
     public AnchorPane create(){
         AnchorPane aPane = new AnchorPane();
-        Image image = new Image(getClass().getResourceAsStream("Small-mario.png"));
-        ImageView iV = new ImageView(image);
-        ImageViewPane viewPane = new ImageViewPane(iV);
-        AnchorPane.setLeftAnchor(viewPane, 0.0);
-        AnchorPane.setRightAnchor(viewPane, 0.0);
-        AnchorPane.setTopAnchor(viewPane, 10.0);
-        AnchorPane.setBottomAnchor(viewPane, 10.0);
+        //try {
+            //Image image = new Image(new FileInputStream(getClass().getResource("Small-mario.png").toExternalForm()));
+            File file = new File("cover.png");
+            Image image = new Image(file.toURI().toString());
+            ImageView iV = new ImageView(image);
+            ImageViewPane viewPane = new ImageViewPane(iV);
+            AnchorPane.setLeftAnchor(viewPane, 0.0);
+            AnchorPane.setRightAnchor(viewPane, 0.0);
+            AnchorPane.setTopAnchor(viewPane, 10.0);
+            AnchorPane.setBottomAnchor(viewPane, 10.0);
 
-        aPane.getChildren().add(viewPane);
-        aPane.setPadding(new Insets(10));
+            aPane.getChildren().add(viewPane);
+            aPane.setPadding(new Insets(10));
+        //}
+        //catch(FileNotFoundException fnf){
+        //    System.out.println("File not found");
+        //}
 
         return aPane;
     }
