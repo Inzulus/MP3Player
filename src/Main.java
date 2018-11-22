@@ -18,14 +18,10 @@ public class Main extends Application {
 
         BorderPane root = new BorderPane();
 
-        VBox topPane = new VBox();
+        InfoBox ibox = new InfoBox();
+        ButtonBar bBar = new ButtonBar();
+        CoverBox cBox = new CoverBox();
 
-        topPane.setAlignment(Pos.BASELINE_CENTER);
-        Label lSongTitle = new Label("SongTitle");
-        Label lSongInterpret = new Label("SongInterpret");
-        //HBox.setMargin(lTop, new Insets(5));
-        topPane.setStyle("-fx-background-color: rgb(240,240,240);");
-        topPane.getChildren().addAll(lSongTitle,lSongInterpret);
 
         HBox rightPane = new HBox();
         rightPane.setStyle("-fx-background-color: rgb(30,30,30);");
@@ -51,11 +47,11 @@ public class Main extends Application {
         //ImageView imageView = new ImageView(image);
         //viewPane.getChildren().add(imageView);
 
-        root.setBottom(bottomPane);
-        root.setCenter(viewPane);
+        root.setBottom(bBar.create());
+        root.setCenter(cBox.create());
         root.setLeft(leftPane);
         root.setRight(rightPane);
-        root.setTop(topPane);
+        root.setTop(ibox.create());
 
 
         Scene scene = new Scene(root);
