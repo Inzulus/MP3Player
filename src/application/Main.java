@@ -11,9 +11,10 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        MP3Player player = new MP3Player("brain.mp3");
+        MP3Player player = new MP3Player();
         PlayerViewController pvc = new PlayerViewController(player);
         pvc.getView().start(primaryStage);
     }

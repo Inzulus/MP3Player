@@ -6,7 +6,10 @@ import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import de.hsrm.mi.prog.util.StaticScanner;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,7 +33,9 @@ public class PlaylistManager {
                 try {
                     Mp3File mp3file = new Mp3File(zeile);
                     ID3v1 id3v1Tag = mp3file.getId3v1Tag();
-                    Track newTrack = new Track(id3v1Tag.getTitle(), id3v1Tag.getArtist(), zeile);
+                    //TODO exception für nicht vorhandenes Bild
+                    BufferedImage trackImage = ImageIO.read(new ByteArrayInputStream(mp3file.getId3v2Tag().getAlbumImage()));
+                    Track newTrack = new Track(id3v1Tag.getTitle(), id3v1Tag.getArtist(), zeile,trackImage);
                     pl.addTrack(newTrack);
 
                 } catch (InvalidDataException e) {

@@ -1,16 +1,20 @@
 package mp3player;
 
-public class Track {
-    String name;
-    String artist;
-    String path;
-    //int length;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 
-    public Track(String name, String artist, String path){
+public class Track {
+    private String name;
+    private String artist;
+    private String path;
+    private BufferedImage image;
+
+    public Track(String name, String artist, String path, BufferedImage image){
         this.artist = artist;
         this.name = name;
         //this.length = length;
         this.path = path;
+        this.image = image;
     }
 
     public String getName() {
@@ -23,6 +27,10 @@ public class Track {
 
     public String getPath() {
         return path;
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 
 

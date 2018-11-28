@@ -13,10 +13,30 @@ public class PlayerViewController {
         this.player = player;
         initialize();
     }
+    //TODO remove Playlist file
+    public void initialize() {
+        view.getbBar().getPlayButton().addEventHandler(ActionEvent.ACTION, event -> {
+            player.play("pl.m3u");
+            setSongInfo();
+        });
+        view.getbBar().getNextButton().addEventHandler(ActionEvent.ACTION, event -> {
+            player.next();
+            setSongInfo();
+        });
+        view.getbBar().getPrevButton().addEventHandler(ActionEvent.ACTION, event -> {
+            player.prev();
+            setSongInfo();
+        });
 
-    public void initialize(){
-        view.getbBar().getPlayButton().addEventHandler(ActionEvent.ACTION, e -> player.play());
     }
+
+    public void setSongInfo(){
+        view.getIbox().getlSongTitle().setText(player.getCurrentTrack().getName());
+        view.getIbox().getlSongInterpret().setText(player.getCurrentTrack().getArtist());
+        view.getcBox().changeImage(player.getCurrentTrack().getImage());
+
+    }
+
 
     public PlayerView getView() {
         return view;
