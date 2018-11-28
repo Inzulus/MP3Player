@@ -27,6 +27,9 @@ public class PlayerViewController {
             player.prev();
             setSongInfo();
         });
+        view.getpSlider().getSlider().valueProperty().addListener((observable,oldValue,newValue)->{
+            player.skip(newValue.intValue());
+        });
 
     }
 
@@ -34,6 +37,10 @@ public class PlayerViewController {
         view.getIbox().getlSongTitle().setText(player.getCurrentTrack().getName());
         view.getIbox().getlSongInterpret().setText(player.getCurrentTrack().getArtist());
         view.getcBox().changeImage(player.getCurrentTrack().getImage());
+
+        view.getpSlider().getSlider().setValue(0);
+        view.getpSlider().getSlider().setMax(player.getTrackLength());
+        view.getpSlider().getrTime().setText(Long.toString(player.getTrackLength()));
 
     }
 

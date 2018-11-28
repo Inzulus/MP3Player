@@ -8,11 +8,12 @@ public class Track {
     private String artist;
     private String path;
     private BufferedImage image;
+    private long length;
 
-    public Track(String name, String artist, String path, BufferedImage image){
+    public Track(String name, String artist, String path,long length, BufferedImage image){
         this.artist = artist;
         this.name = name;
-        //this.length = length;
+        this.length = length;
         this.path = path;
         this.image = image;
     }
@@ -31,6 +32,10 @@ public class Track {
 
     public BufferedImage getImage() {
         return image;
+    }
+
+    public long getLength(){
+        return length;
     }
 
 

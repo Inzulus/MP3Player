@@ -35,7 +35,7 @@ public class PlaylistManager {
                     ID3v1 id3v1Tag = mp3file.getId3v1Tag();
                     //TODO exception für nicht vorhandenes Bild
                     BufferedImage trackImage = ImageIO.read(new ByteArrayInputStream(mp3file.getId3v2Tag().getAlbumImage()));
-                    Track newTrack = new Track(id3v1Tag.getTitle(), id3v1Tag.getArtist(), zeile,trackImage);
+                    Track newTrack = new Track(id3v1Tag.getTitle(), id3v1Tag.getArtist(), zeile,mp3file.getLengthInSeconds(),trackImage);
                     pl.addTrack(newTrack);
 
                 } catch (InvalidDataException e) {

@@ -63,7 +63,10 @@ public class MP3Player {
 
     public void pause(){
         audioPlayer.pause();
+    }
 
+    public void skip(int seconds){
+        audioPlayer.skip(seconds*1000);
     }
 
     public void volume(float value){
@@ -88,5 +91,13 @@ public class MP3Player {
 
     public Track getCurrentTrack(){
         return currentPlaylist.getTrack(currentTrackNumber);
+    }
+
+    public int getCurrentSec(){
+        return audioPlayer.position()/1000;
+    }
+
+    public long getTrackLength(){
+        return currentPlaylist.getTrack(currentTrackNumber).getLength();
     }
 }

@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import resources.ButtonBar;
 import resources.CoverBox;
 import resources.InfoBox;
-import resources.SongSlider;
+import resources.PositionSlider;
 
 
 public class PlayerView extends Application {
@@ -17,17 +17,14 @@ public class PlayerView extends Application {
     private InfoBox ibox = new InfoBox();
     private ButtonBar bBar = new ButtonBar();
     private CoverBox cBox = new CoverBox();
-    private SongSlider sSlider = new SongSlider();
+    private PositionSlider pSlider = new PositionSlider();
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        //Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
+    public void start(Stage primaryStage){
 
         BorderPane root = new BorderPane();
-
-
         VBox playBox = new VBox();
-        playBox.getChildren().addAll(bBar.create(),sSlider.create());
+        playBox.getChildren().addAll(bBar.create(),pSlider.create());
         playBox.setPadding(new Insets(5));
 
 
@@ -59,7 +56,7 @@ public class PlayerView extends Application {
         return cBox;
     }
 
-    public SongSlider getsSlider() {
-        return sSlider;
+    public PositionSlider getpSlider() {
+        return pSlider;
     }
 }
