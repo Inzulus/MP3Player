@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="eibo_staticscanner">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/eibo_staticscanner.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/eibo_staticscanner.jar!/" />
+    </SOURCES>
+  </library>
+</component>

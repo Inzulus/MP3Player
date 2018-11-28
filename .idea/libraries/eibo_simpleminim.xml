@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="eibo_simpleminim">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/eibo_simpleminim.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/eibo_simpleminim.jar!/" />
+    </SOURCES>
+  </library>
+</component>
