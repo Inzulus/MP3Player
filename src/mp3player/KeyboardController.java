@@ -26,7 +26,7 @@ public class KeyboardController {
                     if(eingabeArray.length ==1)
                         mp3Player.play();
                     else
-                        mp3Player.play(eingabeArray[1]);
+                        mp3Player.loadPlaylist(eingabeArray[1]);
                     break;
                 case "pause":
                     mp3Player.pause();

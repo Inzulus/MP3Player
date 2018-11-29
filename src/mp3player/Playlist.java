@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Playlist {
     ArrayList<Track> songs = new ArrayList<Track>();
     String name;
+    int trackCount;
 
     public Playlist(String name){
         this.name = name;
@@ -16,6 +17,10 @@ public class Playlist {
 
     public void addTrack(Track track){
         songs.add(track);
+    }
+
+    public int getTrackCount(){
+        return trackCount;
     }
 
 }

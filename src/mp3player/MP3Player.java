@@ -6,11 +6,12 @@ import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 public class MP3Player {
 
     //TODO close thread?
-    SimpleMinim minim = new SimpleMinim(true);
-    SimpleAudioPlayer audioPlayer;
+    private SimpleMinim minim = new SimpleMinim();
+    private SimpleAudioPlayer audioPlayer;
 
-    int currentTrackNumber = 0;
-    Playlist currentPlaylist;
+    private int currentTrackNumber = 0;
+    private Playlist currentPlaylist;
+    private boolean isPlaying = false;
 
     public MP3Player(String filename){
         audioPlayer = minim.loadMP3File(filename);
@@ -20,26 +21,34 @@ public class MP3Player {
 
     }
 
-    public void play(){
-        audioPlayer.play();
+    public void playThread(){
+        Thread playThread = new Thread(){
+            public void run(){
+                audioPlayer.play();
+            }
+        };
+        playThread.start();
+        isPlaying = true;
     }
 
-    public void play(String filename){
-        PlaylistManager plManager = new PlaylistManager();
-        currentPlaylist = plManager.getPlaylist(filename);
-
+    public void play(){
         audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
         info();
-        audioPlayer.play();
-
+        playThread();
     }
 
-    public void play(Playlist pl){
+    public void loadPlaylist(String filename){
+        PlaylistManager plManager = new PlaylistManager();
+        currentPlaylist = plManager.getPlaylist(filename);
+        info();
+    }
+
+    /*public void play(Playlist pl){
         currentPlaylist = pl;
         audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
         info();
-        audioPlayer.play();
-    }
+        playThread();
+    }*/
 
     /*public void play(String filename){
         audioPlayer = minim.loadMP3File(filename);
@@ -49,20 +58,26 @@ public class MP3Player {
     //TODO loop & stop?
     public void next(){
         audioPlayer.pause();
+        if(currentTrackNumber<)
         audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(++currentTrackNumber).getPath());
         info();
-        audioPlayer.play();
+        playThread();
     }
     //TODO loop
     public void prev(){
         audioPlayer.pause();
         audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(--currentTrackNumber).getPath());
         info();
-        audioPlayer.play();
+        playThread();
     }
 
     public void pause(){
         audioPlayer.pause();
+        isPlaying = false;
+    }
+
+    public boolean isPlaying(){
+        return isPlaying;
     }
 
     public void skip(int seconds){

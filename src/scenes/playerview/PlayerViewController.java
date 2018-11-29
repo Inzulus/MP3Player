@@ -6,7 +6,7 @@ import mp3player.MP3Player;
 
 public class PlayerViewController {
     private PlayerView view;
-    private MP3Player player;
+    private  MP3Player player;
 
     public PlayerViewController(MP3Player player){
         view = new PlayerView();
@@ -15,9 +15,12 @@ public class PlayerViewController {
     }
     //TODO remove Playlist file
     public void initialize() {
+        player.loadPlaylist("pl.m3u");
         view.getbBar().getPlayButton().addEventHandler(ActionEvent.ACTION, event -> {
-            player.play("pl.m3u");
-            setSongInfo();
+                playPause();
+                setSongInfo();
+
+                //player.pause();
         });
         view.getbBar().getNextButton().addEventHandler(ActionEvent.ACTION, event -> {
             player.next();
@@ -31,6 +34,14 @@ public class PlayerViewController {
             player.skip(newValue.intValue());
         });
 
+    }
+
+    public void playPause(){
+        if(!player.isPlaying()){
+            player.play();
+        }
+        else
+            player.pause();
     }
 
     public void setSongInfo(){
