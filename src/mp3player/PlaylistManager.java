@@ -15,9 +15,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class PlaylistManager {
     Playlist aktuellePlaylist;
+    ArrayList<Playlist> plList = new ArrayList<>();
 
     public PlaylistManager(){
 
@@ -48,7 +50,7 @@ public class PlaylistManager {
         } catch (IOException x) {
             System.err.format("IOException: %s%n", x);
         }
-
+        plList.add(pl);
         return pl;
     }
 }

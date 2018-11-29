@@ -25,6 +25,7 @@ public class MP3Player {
         Thread playThread = new Thread(){
             public void run(){
                 audioPlayer.play();
+                next();
             }
         };
         playThread.start();
@@ -73,6 +74,15 @@ public class MP3Player {
     public void pause(){
         audioPlayer.pause();
         isPlaying = false;
+    }
+
+    public void shuffle(){
+        audioPlayer.pause();
+        currentTrackNumber = (int)((currentPlaylist.getTrackCount())*Math.random());
+        System.out.println(currentTrackNumber);
+        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
+        info();
+        playThread();
     }
 
     public boolean isPlaying(){

@@ -19,7 +19,6 @@ public class PlayerViewController {
         view.getbBar().getPlayButton().addEventHandler(ActionEvent.ACTION, event -> {
                 playPause();
                 setSongInfo();
-
                 //player.pause();
         });
         view.getbBar().getNextButton().addEventHandler(ActionEvent.ACTION, event -> {
@@ -32,6 +31,11 @@ public class PlayerViewController {
         });
         view.getpSlider().getSlider().valueProperty().addListener((observable,oldValue,newValue)->{
             player.skip(newValue.intValue());
+        });
+
+        view.getbBar().getShuffleButton().addEventHandler(ActionEvent.ACTION,event -> {
+            player.shuffle();
+            setSongInfo();
         });
 
     }
@@ -54,8 +58,6 @@ public class PlayerViewController {
         view.getpSlider().getrTime().setText(Long.toString(player.getTrackLength()));
 
     }
-
-
     public PlayerView getView() {
         return view;
     }
