@@ -32,43 +32,42 @@ public class MP3Player {
     }
 
     public void play(){
-        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
         info();
         playThread();
     }
 
-    public void loadPlaylist(String filename){
+    public void loadPlaylist(String filename) {
         PlaylistManager plManager = new PlaylistManager();
         currentPlaylist = plManager.getPlaylist(filename);
-        info();
-    }
-
-    /*public void play(Playlist pl){
-        currentPlaylist = pl;
         audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
-        info();
-        playThread();
-    }*/
 
-    /*public void play(String filename){
-        audioPlayer = minim.loadMP3File(filename);
-        audioPlayer.play();
-
-    }*/
-    //TODO loop & stop?
-    public void next(){
-        audioPlayer.pause();
-        if(currentTrackNumber<)
-        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(++currentTrackNumber).getPath());
         info();
-        playThread();
     }
-    //TODO loop
+
+    public void next() {
+        audioPlayer.pause();
+        if (currentTrackNumber < currentPlaylist.getTrackCount() - 1){
+            audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(++currentTrackNumber).getPath());
+            info();
+            playThread();
+        }
+        else{
+            currentTrackNumber=-1;
+            next();
+        }
+    }
+
     public void prev(){
         audioPlayer.pause();
-        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(--currentTrackNumber).getPath());
-        info();
-        playThread();
+        if(currentTrackNumber==0) {
+            currentTrackNumber = currentPlaylist.getTrackCount();
+            prev();
+        }
+        else{
+            audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(--currentTrackNumber).getPath());
+            info();
+            playThread();
+        }
     }
 
     public void pause(){

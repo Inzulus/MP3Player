@@ -3,9 +3,8 @@ package mp3player;
 import java.util.ArrayList;
 
 public class Playlist {
-    ArrayList<Track> songs = new ArrayList<Track>();
-    String name;
-    int trackCount;
+    private ArrayList<Track> songs = new ArrayList<Track>();
+    private String name;
 
     public Playlist(String name){
         this.name = name;
@@ -20,7 +19,8 @@ public class Playlist {
     }
 
     public int getTrackCount(){
-        return trackCount;
+        return songs.size();
     }
+
 
 }
