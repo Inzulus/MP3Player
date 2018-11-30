@@ -3,6 +3,10 @@ package mp3player;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class MP3Player {
 
     //TODO close thread?
@@ -12,6 +16,7 @@ public class MP3Player {
     private int currentTrackNumber = 0;
     private Playlist currentPlaylist;
     private boolean isPlaying = false;
+    private List listener = new ArrayList();
 
     public MP3Player(String filename){
         audioPlayer = minim.loadMP3File(filename);
@@ -21,11 +26,28 @@ public class MP3Player {
 
     }
 
+    private synchronized void fireInfoEvent(){
+        InfoEvent ie = new InfoEvent(this,getCurrentTrack());
+        Iterator listener = this.listener.iterator();
+        while(listener.hasNext()){
+            ((InfoListener)(listener.next())).infoReceived(ie);
+        }
+    }
+
+    public synchronized void addInfoListener(InfoListener il){
+        listener.add(il);
+    }
+
+    public synchronized void removeInfoListener(InfoListener il){
+        listener.remove(il);
+    }
+
     public void playThread(){
+        fireInfoEvent();
         Thread playThread = new Thread(){
             public void run(){
                 audioPlayer.play();
-                next();
+                //next();
             }
         };
         playThread.start();
@@ -121,7 +143,7 @@ public class MP3Player {
         return audioPlayer.position()/1000;
     }
 
-    public long getTrackLength(){
+   /* public long getTrackLength(){
         return currentPlaylist.getTrack(currentTrackNumber).getLength();
-    }
+    }*/
 }
