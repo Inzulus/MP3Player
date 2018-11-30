@@ -2,6 +2,7 @@ package mp3player;
 
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,15 +44,26 @@ public class MP3Player {
     }
 
     public void playThread(){
-        fireInfoEvent();
+        fireInfoEventLater();
         Thread playThread = new Thread(){
             public void run(){
                 audioPlayer.play();
-                //next();
+                //nextOhneThread();
+                //fireInfoEventLater();
             }
         };
         playThread.start();
         isPlaying = true;
+    }
+
+    public void fireInfoEventLater(){
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                fireInfoEvent();
+            }
+        });
+
     }
 
     public void play(){
@@ -77,6 +89,19 @@ public class MP3Player {
         else{
             currentTrackNumber=-1;
             next();
+        }
+    }
+
+    public void nextOhneThread(){
+        audioPlayer.pause();
+        if (currentTrackNumber < currentPlaylist.getTrackCount() - 1){
+            audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(++currentTrackNumber).getPath());
+            info();
+            audioPlayer.play();
+        }
+        else{
+            currentTrackNumber=-1;
+            nextOhneThread();
         }
     }
 
