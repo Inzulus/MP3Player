@@ -48,8 +48,9 @@ public class MP3Player {
         Thread playThread = new Thread(){
             public void run(){
                 audioPlayer.play();
-                //nextOhneThread();
-                //fireInfoEventLater();
+                onCompletion();
+                //ireInfoEventLater();
+
             }
         };
         playThread.start();
@@ -92,16 +93,20 @@ public class MP3Player {
         }
     }
 
-    public void nextOhneThread(){
-        audioPlayer.pause();
+    public void onCompletion(){
+        //audioPlayer.pause();
         if (currentTrackNumber < currentPlaylist.getTrackCount() - 1){
             audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(++currentTrackNumber).getPath());
             info();
+            fireInfoEvent();
             audioPlayer.play();
         }
         else{
-            currentTrackNumber=-1;
-            nextOhneThread();
+            currentTrackNumber=0;
+            audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
+            info();
+            audioPlayer.play();
+            fireInfoEvent();
         }
     }
 

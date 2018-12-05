@@ -11,6 +11,7 @@ public class PlayerViewController {
     private  MP3Player player;
     private InfoListener il = new InfoListener() {
         @Override
+        //TODO RUNLLATER
         public void infoReceived(InfoEvent event) {
             view.getIbox().getlSongTitle().setText(event.getTrack().getName());
             view.getIbox().getlSongInterpret().setText(event.getTrack().getArtist());
@@ -36,6 +37,7 @@ public class PlayerViewController {
                 //setSongInfo();
                 //player.pause();
         });
+        view.getPlaylistBox().loadPlaylist(player.getCurrentPlaylist());
         view.getbBar().getNextButton().addEventHandler(ActionEvent.ACTION, event -> {
             player.next();
             //setSongInfo();
