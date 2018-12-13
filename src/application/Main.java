@@ -12,10 +12,23 @@ public class Main extends Application {
         launch(args);
     }
 
+    MP3Player player;
+    PlayerViewController pvc;
+
+    public void init(){
+        player = new MP3Player();
+        pvc = new PlayerViewController(player);
+
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        MP3Player player = new MP3Player();
-        PlayerViewController pvc = new PlayerViewController(player);
         pvc.getView().start(primaryStage);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        player.stop();
     }
 }

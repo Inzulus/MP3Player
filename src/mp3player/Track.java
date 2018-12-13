@@ -38,6 +38,11 @@ public class Track {
         return length;
     }
 
+    @Override
+    public String toString(){
+          return name+" - "+artist+"   "+length/60+":"+length%60;
+    }
+
 
 
 }

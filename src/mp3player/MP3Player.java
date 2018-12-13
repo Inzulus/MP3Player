@@ -18,6 +18,7 @@ public class MP3Player {
     private Playlist currentPlaylist;
     private boolean isPlaying = false;
     private List listener = new ArrayList();
+    private Thread playThread;
 
     public MP3Player(String filename){
         audioPlayer = minim.loadMP3File(filename);
@@ -45,14 +46,17 @@ public class MP3Player {
 
     public void playThread(){
         fireInfoEventLater();
-        Thread playThread = new Thread(){
+        if(playThread != null && playThread.isAlive())
+            minim.stop();
+        playThread = new Thread(){
             public void run(){
                 audioPlayer.play();
                 onCompletion();
-                //ireInfoEventLater();
+                //fireInfoEventLater();
 
             }
         };
+        playThread.setDaemon(true);
         playThread.start();
         isPlaying = true;
     }
@@ -69,6 +73,11 @@ public class MP3Player {
 
     public void play(){
         info();
+        playThread();
+    }
+
+    public void play(Track track){
+        audioPlayer = minim.loadMP3File(track.getPath());
         playThread();
     }
 

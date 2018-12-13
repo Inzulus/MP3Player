@@ -1,6 +1,8 @@
 package scenes.playerview;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import mp3player.InfoEvent;
 import mp3player.InfoListener;
 import mp3player.MP3Player;
@@ -54,6 +56,14 @@ public class PlayerViewController {
         view.getbBar().getShuffleButton().addEventHandler(ActionEvent.ACTION,event -> {
             player.shuffle();
             //setSongInfo();
+        });
+
+        view.getPlaylistBox().getPlList().setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                player.play(view.getPlaylistBox().getPlList().getSelectionModel().getSelectedItem());
+            }
         });
 
     }
