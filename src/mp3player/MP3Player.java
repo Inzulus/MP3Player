@@ -2,15 +2,15 @@ package mp3player;
 
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
-import javafx.application.Platform;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 public class MP3Player {
 
-    //TODO close thread?
     private SimpleMinim minim = new SimpleMinim();
     private SimpleAudioPlayer audioPlayer;
 
@@ -19,6 +19,19 @@ public class MP3Player {
     private boolean isPlaying = false;
     private List listener = new ArrayList();
     private Thread playThread;
+    private Thread timeThread;
+    private TimeProperty currentTime = new TimeProperty();
+
+
+    private boolean shuffle;
+    public enum playStatus{
+        isPlaying,paused,stopped
+    };
+
+    public TimeProperty getCurrentTimeProperty(){
+        return currentTime;
+    }
+
 
     public MP3Player(String filename){
         audioPlayer = minim.loadMP3File(filename);
@@ -44,16 +57,35 @@ public class MP3Player {
         listener.remove(il);
     }
 
+    public void startTimer(){
+        currentTime.setTime(0);
+        if(timeThread!=null)
+            timeThread.interrupt();
+        timeThread = new Thread() {
+            public void run() {
+                for (int i = 0; i < getCurrentTrack().getLength(); i++) {
+                    currentTime.setTime(i);
+                    System.out.println(currentTime.getTime());
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        timeThread.start();
+
+    }
+
+
     public void playThread(){
-        fireInfoEventLater();
-        if(playThread != null && playThread.isAlive())
-            minim.stop();
+        startTimer();
+        fireInfoEvent();
         playThread = new Thread(){
             public void run(){
                 audioPlayer.play();
                 onCompletion();
-                //fireInfoEventLater();
-
             }
         };
         playThread.setDaemon(true);
@@ -61,22 +93,15 @@ public class MP3Player {
         isPlaying = true;
     }
 
-    public void fireInfoEventLater(){
-        Platform.runLater(new Runnable(){
-            @Override
-            public void run() {
-                fireInfoEvent();
-            }
-        });
-
-    }
 
     public void play(){
         info();
         playThread();
     }
 
-    public void play(Track track){
+    public void play(Track track,int currentTrackNumber){
+        this.currentTrackNumber = currentTrackNumber;
+        minim.stop();
         audioPlayer = minim.loadMP3File(track.getPath());
         playThread();
     }
@@ -90,60 +115,59 @@ public class MP3Player {
     }
 
     public void next() {
-        audioPlayer.pause();
-        if (currentTrackNumber < currentPlaylist.getTrackCount() - 1){
-            audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(++currentTrackNumber).getPath());
-            info();
-            playThread();
+        minim.stop();
+        if(shuffle){
+            currentTrackNumber = (int) (Math.random()*currentPlaylist.getTrackCount());
         }
-        else{
-            currentTrackNumber=-1;
-            next();
-        }
-    }
-
-    public void onCompletion(){
-        //audioPlayer.pause();
-        if (currentTrackNumber < currentPlaylist.getTrackCount() - 1){
-            audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(++currentTrackNumber).getPath());
-            info();
-            fireInfoEvent();
-            audioPlayer.play();
+        else if(currentTrackNumber < currentPlaylist.getTrackCount() - 1){
+            currentTrackNumber++;
         }
         else{
             currentTrackNumber=0;
-            audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
-            info();
-            audioPlayer.play();
-            fireInfoEvent();
+
         }
+        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
+        info();
+        fireInfoEvent();
+        playThread();
+    }
+
+    public void onCompletion(){
+        if(shuffle){
+            currentTrackNumber = (int) (Math.random()*currentPlaylist.getTrackCount());
+        }
+        else if(currentTrackNumber < currentPlaylist.getTrackCount() - 1){
+            currentTrackNumber++;
+        }
+        else{
+            currentTrackNumber=0;
+
+        }
+        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
+        info();
+        fireInfoEvent();
+        playThread();
     }
 
     public void prev(){
-        audioPlayer.pause();
-        if(currentTrackNumber==0) {
-            currentTrackNumber = currentPlaylist.getTrackCount();
-            prev();
+        minim.stop();
+        if(shuffle){
+            currentTrackNumber = (int) (Math.random()*currentPlaylist.getTrackCount());
+        }
+        else if(currentTrackNumber==0) {
+            currentTrackNumber = currentPlaylist.getTrackCount()-1;
         }
         else{
-            audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(--currentTrackNumber).getPath());
-            info();
-            playThread();
+            currentTrackNumber--;
         }
+        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
+        info();
+        playThread();
     }
 
     public void pause(){
         audioPlayer.pause();
         isPlaying = false;
-    }
-
-    public void shuffle(){
-        audioPlayer.pause();
-        currentTrackNumber = (int)((currentPlaylist.getTrackCount())*Math.random());
-        System.out.println(currentTrackNumber);
-        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
-        info();
-        playThread();
     }
 
     public boolean isPlaying(){
@@ -162,6 +186,7 @@ public class MP3Player {
     public void stop(){
         audioPlayer.rewind();
         audioPlayer.pause();
+        minim.stop();
 
     }
 
@@ -182,7 +207,13 @@ public class MP3Player {
         return audioPlayer.position()/1000;
     }
 
-   /* public long getTrackLength(){
-        return currentPlaylist.getTrack(currentTrackNumber).getLength();
-    }*/
+
+    public boolean isShuffle() {
+        return shuffle;
+    }
+
+    public void setShuffle(boolean shuffle) {
+        this.shuffle = shuffle;
+    }
+
 }

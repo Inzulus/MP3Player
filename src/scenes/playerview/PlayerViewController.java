@@ -1,5 +1,12 @@
 package scenes.playerview;
 
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -10,18 +17,23 @@ import mp3player.MP3Player;
 
 public class PlayerViewController {
     private PlayerView view;
-    private  MP3Player player;
+    private MP3Player player;
+    private SimpleIntegerProperty currentTime = new SimpleIntegerProperty();
     private InfoListener il = new InfoListener() {
         @Override
-        //TODO RUNLLATER
         public void infoReceived(InfoEvent event) {
-            view.getIbox().getlSongTitle().setText(event.getTrack().getName());
-            view.getIbox().getlSongInterpret().setText(event.getTrack().getArtist());
-            view.getcBox().changeImage(event.getTrack().getImage());
+            Platform.runLater(new Runnable(){
+                @Override
+                public void run() {
+                    view.getIbox().getlSongTitle().setText(event.getTrack().getName());
+                    view.getIbox().getlSongInterpret().setText(event.getTrack().getArtist());
+                    view.getcBox().changeImage(event.getTrack().getImage());
 
-            view.getpSlider().getSlider().setValue(0);
-            view.getpSlider().getSlider().setMax(event.getTrack().getLength());
-            view.getpSlider().getrTime().setText(Long.toString(event.getTrack().getLength()));
+                    view.getpSlider().getSlider().setValue(0);
+                    view.getpSlider().getSlider().setMax(event.getTrack().getLength());
+                    view.getpSlider().getrTime().setText(String.format("%02d:%02d",event.getTrack().getLength()/60,event.getTrack().getLength()));
+                }
+            });
         }
     };
 
@@ -36,33 +48,39 @@ public class PlayerViewController {
         player.addInfoListener(il);
         view.getbBar().getPlayButton().addEventHandler(ActionEvent.ACTION, event -> {
                 playPause();
-                //setSongInfo();
-                //player.pause();
         });
         view.getPlaylistBox().loadPlaylist(player.getCurrentPlaylist());
         view.getbBar().getNextButton().addEventHandler(ActionEvent.ACTION, event -> {
             player.next();
-            //setSongInfo();
         });
         view.getbBar().getPrevButton().addEventHandler(ActionEvent.ACTION, event -> {
             player.prev();
-            //setSongInfo();
         });
-        //TODO changelistener oder notifier in mp3player implementieren
         view.getpSlider().getSlider().valueProperty().addListener((observable,oldValue,newValue)->{
-            player.skip(newValue.intValue());
+            //player.skip(newValue.intValue());
+        });
+
+        player.getCurrentTimeProperty().timeProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                //System.out.println(newValue+"aaaaaaaaaaaaaaaaaaaaaaah!!!!!");
+                Platform.runLater(() -> view.getpSlider().getlTime().setText(String.format("%02d:%02d",newValue.intValue()/60,newValue.intValue())));
+                Platform.runLater(() -> view.getpSlider().getSlider().valueProperty().bindBidirectional(
+                        player.getCurrentTimeProperty().timeProperty()
+                ));
+            }
         });
 
         view.getbBar().getShuffleButton().addEventHandler(ActionEvent.ACTION,event -> {
-            player.shuffle();
-            //setSongInfo();
+            player.setShuffle(view.getbBar().getShuffleButton().isSelected());
         });
 
         view.getPlaylistBox().getPlList().setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
-                player.play(view.getPlaylistBox().getPlList().getSelectionModel().getSelectedItem());
+                player.play(view.getPlaylistBox().getPlList().getSelectionModel().getSelectedItem(),
+                            view.getPlaylistBox().getPlList().getSelectionModel().getSelectedIndex());
             }
         });
 

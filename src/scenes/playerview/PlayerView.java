@@ -38,6 +38,8 @@ public class PlayerView extends Application {
 
 
         Scene scene = new Scene(bigHBox);
+        //TODO FILE URL SHIT
+        //scene.getStylesheets().add(getClass().getResource("style.css"));
 
         primaryStage.setTitle("MP3Player");
         primaryStage.setScene(scene);

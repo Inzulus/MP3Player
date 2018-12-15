@@ -19,9 +19,9 @@ public class PositionSlider {
         slider.setMax(0);
         slider.setValue(0);
 
-        lTime.textProperty().bind(
+        /*lTime.textProperty().bind(
                 Bindings.format("%.2f",slider.valueProperty())
-        );
+        );*/
 
         sliderBox.getChildren().addAll(lTime,slider,rTime);
         sliderBox.setAlignment(Pos.BASELINE_CENTER);

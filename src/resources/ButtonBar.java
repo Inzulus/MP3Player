@@ -3,6 +3,7 @@ package resources;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 
 public class ButtonBar {
@@ -10,7 +11,7 @@ public class ButtonBar {
     private Button playButton = new Button("Play");
     private Button nextButton = new Button("Next");
     private Button prevButton = new Button("Prev");
-    private Button shuffleButton = new Button("Shuffle");
+    private ToggleButton shuffleButton = new ToggleButton("Shuffle");
 
 
 
@@ -38,7 +39,7 @@ public class ButtonBar {
         return prevButton;
     }
 
-    public Button getShuffleButton() {
+    public ToggleButton getShuffleButton() {
         return shuffleButton;
     }
 }
