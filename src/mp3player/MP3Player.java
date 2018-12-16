@@ -24,9 +24,9 @@ public class MP3Player {
 
 
     private boolean shuffle;
-    public enum playStatus{
+    /*public enum playStatus{
         isPlaying,paused,stopped
-    };
+    };*/
 
     public TimeProperty getCurrentTimeProperty(){
         return currentTime;
@@ -63,13 +63,25 @@ public class MP3Player {
             timeThread.interrupt();
         timeThread = new Thread() {
             public void run() {
-                for (int i = 0; i < getCurrentTrack().getLength(); i++) {
-                    currentTime.setTime(i);
-                    System.out.println(currentTime.getTime());
+                /*for (int i = 0; i < getCurrentTrack().getLength() && !timeThread.isInterrupted(); i++) {
+                    System.out.println(i);
+                    currentTime.setTime(audioPlayer.position()/1000);
+                    i = audioPlayer.position()/1000;
                     try {
                         sleep(1000);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        this.interrupt();
+                        //e.printStackTrace();
+                    }
+                }*/
+                while(true){
+                    System.out.println(audioPlayer.position());
+                    currentTime.setTime(audioPlayer.position()/1000);
+                    try {
+                        sleep(200);
+                    } catch (InterruptedException e) {
+                        this.interrupt();
+                        //e.printStackTrace();
                     }
                 }
             }
@@ -79,13 +91,15 @@ public class MP3Player {
     }
 
 
+
     public void playThread(){
         startTimer();
         fireInfoEvent();
         playThread = new Thread(){
             public void run(){
                 audioPlayer.play();
-                onCompletion();
+                if(isPlaying)
+                    onCompletion();
             }
         };
         playThread.setDaemon(true);
@@ -96,10 +110,17 @@ public class MP3Player {
 
     public void play(){
         info();
+        isPlaying = true;
         playThread();
+        //audioPlayer.play();
+    }
+    public void unpause(){
+        isPlaying = true;
+        audioPlayer.play();
     }
 
     public void play(Track track,int currentTrackNumber){
+        isPlaying = true;
         this.currentTrackNumber = currentTrackNumber;
         minim.stop();
         audioPlayer = minim.loadMP3File(track.getPath());
@@ -116,6 +137,7 @@ public class MP3Player {
 
     public void next() {
         minim.stop();
+        //timeThread.interrupt();
         if(shuffle){
             currentTrackNumber = (int) (Math.random()*currentPlaylist.getTrackCount());
         }
@@ -129,7 +151,8 @@ public class MP3Player {
         audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
         info();
         fireInfoEvent();
-        playThread();
+        if(isPlaying)
+            playThread();
     }
 
     public void onCompletion(){
@@ -162,12 +185,13 @@ public class MP3Player {
         }
         audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
         info();
-        playThread();
+        if(isPlaying)
+            playThread();
     }
 
     public void pause(){
-        audioPlayer.pause();
         isPlaying = false;
+        audioPlayer.pause();
     }
 
     public boolean isPlaying(){

@@ -1,6 +1,8 @@
 package scenes.playerview;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -8,6 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import resources.*;
+
+import java.io.File;
 
 
 public class PlayerView extends Application {
@@ -17,10 +21,11 @@ public class PlayerView extends Application {
     private CoverBox cBox = new CoverBox();
     private PositionSlider pSlider = new PositionSlider();
     private PlaylistBox plView = new PlaylistBox();
-
+    private Stage stage;
 
     @Override
     public void start(Stage primaryStage){
+        stage = primaryStage;
 
         HBox bigHBox = new HBox();
         BorderPane root = new BorderPane();
@@ -39,7 +44,8 @@ public class PlayerView extends Application {
 
         Scene scene = new Scene(bigHBox);
         //TODO FILE URL SHIT
-        //scene.getStylesheets().add(getClass().getResource("style.css"));
+        File file = new File("files/style.css");
+        scene.getStylesheets().add(file.toURI().toString());
 
         primaryStage.setTitle("MP3Player");
         primaryStage.setScene(scene);
@@ -48,7 +54,9 @@ public class PlayerView extends Application {
     }
 
 
-
+    public Stage getStage(){
+        return stage;
+    }
 
     public InfoBox getIbox() {
         return ibox;

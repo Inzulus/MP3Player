@@ -1,6 +1,29 @@
-.button{
+.dfghjklbutton{
     -fx-text-fill: rgb(49, 89, 23);
     -fx-border-color: rgb(49, 89, 23);
     -fx-border-radius: 5;
     -fx-padding: 3 6 6 6;
 }
+
+.button {
+     -fx-background-color: transparent;
+}
+
+#playButton {
+    -fx-border-style: none;
+}
+
+#nextButton {
+}
+
+#prevButton {
+}
+
+#pauseButton {
+}
+
+#shuffleButton {
+    -fx-background-color: transparent;
+}
+
+

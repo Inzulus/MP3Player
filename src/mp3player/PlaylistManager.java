@@ -8,10 +8,7 @@ import de.hsrm.mi.prog.util.StaticScanner;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,6 +17,7 @@ import java.util.ArrayList;
 public class PlaylistManager {
     Playlist aktuellePlaylist;
     ArrayList<Playlist> plList = new ArrayList<>();
+    BufferedImage trackImage;
 
     public PlaylistManager(){
 
@@ -36,7 +34,13 @@ public class PlaylistManager {
                     Mp3File mp3file = new Mp3File(zeile);
                     ID3v1 id3v1Tag = mp3file.getId3v1Tag();
                     //TODO exception für nicht vorhandenes Bild
-                    BufferedImage trackImage = ImageIO.read(new ByteArrayInputStream(mp3file.getId3v2Tag().getAlbumImage()));
+                    if(mp3file.getId3v2Tag().getAlbumImage()!=null) {
+                         trackImage = ImageIO.read(new ByteArrayInputStream(mp3file.getId3v2Tag().getAlbumImage()));
+                    }
+                    else{
+                        File newFile = new File("files/cover.png");
+                        trackImage = ImageIO.read(newFile);
+                    }
                     Track newTrack = new Track(id3v1Tag.getTitle(), id3v1Tag.getArtist(), zeile,mp3file.getLengthInSeconds(),trackImage);
                     pl.addTrack(newTrack);
 

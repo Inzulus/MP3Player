@@ -34,6 +34,10 @@ public class CoverBox {
     }
 
     public void changeImage(BufferedImage bufferedImage){
-        iV.setImage(SwingFXUtils.toFXImage(bufferedImage,null));
+        if(bufferedImage!=null)
+            iV.setImage(SwingFXUtils.toFXImage(bufferedImage,null));
+        else{
+            iV.setImage(image);
+        }
     }
 }
