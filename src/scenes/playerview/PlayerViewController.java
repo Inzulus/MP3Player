@@ -1,10 +1,6 @@
 package scenes.playerview;
 
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -60,7 +56,7 @@ public class PlayerViewController {
         });
 
         view.getbBar().getPlayButton().addEventHandler(ActionEvent.ACTION, event -> {
-            playPause();
+            play();
         });
         view.getbBar().getPauseButton().addEventHandler(ActionEvent.ACTION,event -> {
             pause();
@@ -98,14 +94,19 @@ public class PlayerViewController {
 
             @Override
             public void handle(MouseEvent event) {
-                player.play(view.getPlaylistBox().getPlList().getSelectionModel().getSelectedItem(),
+
+                if(!player.isPlaying()) {
+                    view.getbBar().getHBox().getChildren().remove(1);
+                    view.getbBar().getHBox().getChildren().add(1, view.getbBar().getPauseButton());
+                }
+                    player.play(view.getPlaylistBox().getPlList().getSelectionModel().getSelectedItem(),
                             view.getPlaylistBox().getPlList().getSelectionModel().getSelectedIndex());
             }
         });
 
     }
 
-    public void playPause(){
+    public void play(){
         if(!player.isPlaying()){
             view.getbBar().getHBox().getChildren().remove(1);
             view.getbBar().getHBox().getChildren().add(1,view.getbBar().getPauseButton());

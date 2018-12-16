@@ -6,10 +6,12 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import mp3player.Playlist;
 import mp3player.Track;
 
@@ -44,6 +46,12 @@ public class PlaylistBox {
             observableList.add(pl.getTrack(i));
         }
         plList.setItems(observableList);
+        plList.setCellFactory(new Callback<ListView<Track>, ListCell<Track>>() {
+            @Override
+            public ListCell<Track> call(ListView<Track> param) {
+                return new TrackListCell();
+            }
+        });
 
 
 

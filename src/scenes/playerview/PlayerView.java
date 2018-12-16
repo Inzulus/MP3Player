@@ -43,7 +43,6 @@ public class PlayerView extends Application {
 
 
         Scene scene = new Scene(bigHBox);
-        //TODO FILE URL SHIT
         File file = new File("files/style.css");
         scene.getStylesheets().add(file.toURI().toString());
 
