@@ -57,6 +57,23 @@ public class MP3Player {
         listener.remove(il);
     }
 
+    public void volume(float value){
+        if(audioPlayer.isPlaying()){
+            if(value>=0 && value <=2){
+                float v = 20*(float)Math.log10(value);
+                audioPlayer.setGain(v);
+            }
+        }
+    }
+
+    public void mute(){
+        if(!audioPlayer.isMuted())
+            audioPlayer.mute();
+        else{
+            audioPlayer.unmute();
+        }
+    }
+
     public void startTimer(){
         currentTime.setTime(0);
         if(timeThread!=null)
@@ -202,10 +219,7 @@ public class MP3Player {
         audioPlayer.skip(seconds*1000);
     }
 
-    public void volume(float value){
-        value = value*60;
-        audioPlayer.setGain(value);
-    }
+
 
     public void stop(){
         audioPlayer.rewind();

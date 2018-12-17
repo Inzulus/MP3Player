@@ -21,11 +21,13 @@ public class CoverBox {
             File file = new File("files/cover.png");
             image = new Image(file.toURI().toString());
             iV = new ImageView(image);
+            iV.preserveRatioProperty().setValue(true);
             viewPane = new ImageViewPane(iV);
             AnchorPane.setLeftAnchor(viewPane, 0.0);
             AnchorPane.setRightAnchor(viewPane, 0.0);
             AnchorPane.setTopAnchor(viewPane, 10.0);
             AnchorPane.setBottomAnchor(viewPane, 10.0);
+            iV.preserveRatioProperty().setValue(true);
 
             aPane.getChildren().add(viewPane);
             aPane.setPadding(new Insets(10));

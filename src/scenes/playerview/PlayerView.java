@@ -21,6 +21,7 @@ public class PlayerView extends Application {
     private CoverBox cBox = new CoverBox();
     private PositionSlider pSlider = new PositionSlider();
     private PlaylistBox plView = new PlaylistBox();
+    private VolumeSlider vSlider = new VolumeSlider();
     private Stage stage;
 
     @Override
@@ -30,7 +31,7 @@ public class PlayerView extends Application {
         HBox bigHBox = new HBox();
         BorderPane root = new BorderPane();
         VBox playBox = new VBox();
-        playBox.getChildren().addAll(bBar.create(),pSlider.create());
+        playBox.getChildren().addAll(pSlider.create(),bBar.create(),vSlider.create());
         playBox.setPadding(new Insets(5));
 
         root.setBottom(playBox);
@@ -75,5 +76,9 @@ public class PlayerView extends Application {
 
     public PlaylistBox getPlaylistBox(){
         return plView;
+    }
+
+    public VolumeSlider getvSlider() {
+        return vSlider;
     }
 }

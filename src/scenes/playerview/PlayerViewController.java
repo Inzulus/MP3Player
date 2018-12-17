@@ -71,6 +71,10 @@ public class PlayerViewController {
             //player.skip(newValue.intValue());
         });
 
+        view.getvSlider().getVolumeSlider().valueProperty().addListener((observable,oldValue,newValues)->{
+            player.volume(newValues.floatValue());
+        });
+
         view.getPlaylistBox().getOpenPlaylistButton().addEventHandler(ActionEvent.ACTION,event -> {
             //player.loadPlaylist(fileChooser.showOpenDialog());
         });
@@ -88,6 +92,10 @@ public class PlayerViewController {
 
         view.getbBar().getShuffleButton().addEventHandler(ActionEvent.ACTION,event -> {
             player.setShuffle(view.getbBar().getShuffleButton().isSelected());
+        });
+
+        view.getvSlider().getMuteButton().addEventHandler(ActionEvent.ACTION,event -> {
+            player.mute();
         });
 
         view.getPlaylistBox().getPlList().setOnMouseClicked(new EventHandler<MouseEvent>() {
