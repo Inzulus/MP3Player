@@ -16,31 +16,30 @@ public class MP3Player {
 
     private int currentTrackNumber = 0;
     private Playlist currentPlaylist;
-    private boolean isPlaying = false;
     private List listener = new ArrayList();
+
     private Thread playThread;
     private Thread timeThread;
     private TimeProperty currentTime = new TimeProperty();
 
-
+    private boolean isPlaying = false;
     private boolean shuffle;
+
     /*public enum playStatus{
         isPlaying,paused,stopped
     };*/
 
-    public TimeProperty getCurrentTimeProperty(){
-        return currentTime;
-    }
 
-
+    //Konstruktor:
     public MP3Player(String filename){
         audioPlayer = minim.loadMP3File(filename);
     }
 
     public MP3Player(){
-
     }
 
+
+    //Synchronized:
     private synchronized void fireInfoEvent(){
         InfoEvent ie = new InfoEvent(this,getCurrentTrack());
         Iterator listener = this.listener.iterator();
@@ -49,31 +48,22 @@ public class MP3Player {
         }
     }
 
-    public synchronized void addInfoListener(InfoListener il){
-        listener.add(il);
+    public synchronized void addInfoListener(InfoListener il){ listener.add(il); }
+
+    public synchronized void removeInfoListener(InfoListener il){ listener.remove(il); }
+
+
+    //Playlist laden:
+    public void loadPlaylist(String filename) {
+        PlaylistManager plManager = new PlaylistManager();
+        currentPlaylist = plManager.getPlaylist(filename);
+        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
+
+        info();
     }
 
-    public synchronized void removeInfoListener(InfoListener il){
-        listener.remove(il);
-    }
 
-    public void volume(float value){
-        if(audioPlayer.isPlaying()){
-            if(value>=0 && value <=2){
-                float v = 20*(float)Math.log10(value);
-                audioPlayer.setGain(v);
-            }
-        }
-    }
-
-    public void mute(){
-        if(!audioPlayer.isMuted())
-            audioPlayer.mute();
-        else{
-            audioPlayer.unmute();
-        }
-    }
-
+    //Start_Methoden zum abspielen eines Songs:
     public void startTimer(){
         currentTime.setTime(0);
         if(timeThread!=null)
@@ -107,8 +97,6 @@ public class MP3Player {
 
     }
 
-
-
     public void playThread(){
         startTimer();
         fireInfoEvent();
@@ -125,15 +113,12 @@ public class MP3Player {
     }
 
 
+    //Play-Methoden:
     public void play(){
         info();
         isPlaying = true;
         playThread();
         //audioPlayer.play();
-    }
-    public void unpause(){
-        isPlaying = true;
-        audioPlayer.play();
     }
 
     public void play(Track track,int currentTrackNumber){
@@ -144,17 +129,10 @@ public class MP3Player {
         playThread();
     }
 
-    public void loadPlaylist(String filename) {
-        PlaylistManager plManager = new PlaylistManager();
-        currentPlaylist = plManager.getPlaylist(filename);
-        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
 
-        info();
-    }
-
+    //Überspringen:
     public void next() {
         minim.stop();
-        //timeThread.interrupt();
         if(shuffle){
             currentTrackNumber = (int) (Math.random()*currentPlaylist.getTrackCount());
         }
@@ -170,23 +148,6 @@ public class MP3Player {
         fireInfoEvent();
         if(isPlaying)
             playThread();
-    }
-
-    public void onCompletion(){
-        if(shuffle){
-            currentTrackNumber = (int) (Math.random()*currentPlaylist.getTrackCount());
-        }
-        else if(currentTrackNumber < currentPlaylist.getTrackCount() - 1){
-            currentTrackNumber++;
-        }
-        else{
-            currentTrackNumber=0;
-
-        }
-        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
-        info();
-        fireInfoEvent();
-        playThread();
     }
 
     public void prev(){
@@ -206,52 +167,85 @@ public class MP3Player {
             playThread();
     }
 
+    public void skip(int seconds){ audioPlayer.skip(seconds*1000); }
+
+
+    //normaler Loop:
+    public void onCompletion(){
+        if(shuffle){
+            currentTrackNumber = (int) (Math.random()*currentPlaylist.getTrackCount());
+        }
+        else if(currentTrackNumber < currentPlaylist.getTrackCount() - 1){
+            currentTrackNumber++;
+        }
+        else{
+            currentTrackNumber=0;
+
+        }
+        audioPlayer = minim.loadMP3File(currentPlaylist.getTrack(currentTrackNumber).getPath());
+        info();
+        fireInfoEvent();
+        playThread();
+    }
+
+
+    //Lautstärke:
+    public void volume(float value){
+        if(audioPlayer.isPlaying()){
+            if(value>=0 && value <=2){
+                float v = 20*(float)Math.log10(value);
+                audioPlayer.setGain(v);
+            }
+        }
+    }
+
+    public void mute(){
+        if(!audioPlayer.isMuted())
+            audioPlayer.mute();
+        else{
+            audioPlayer.unmute();
+        }
+    }
+
+
+    //Pause/Stop:
     public void pause(){
         isPlaying = false;
         audioPlayer.pause();
     }
 
-    public boolean isPlaying(){
-        return isPlaying;
+    public void unpause(){
+        isPlaying = true;
+        audioPlayer.play();
     }
-
-    public void skip(int seconds){
-        audioPlayer.skip(seconds*1000);
-    }
-
-
 
     public void stop(){
         audioPlayer.rewind();
         audioPlayer.pause();
         minim.stop();
-
     }
 
+    //Artist und Sontitel INFO:
     public void info(){
         System.out.print(currentPlaylist.getTrack(currentTrackNumber).getArtist()+" - ");
         System.out.println(currentPlaylist.getTrack(currentTrackNumber).getName());
     }
 
-    public Playlist getCurrentPlaylist() {
-        return currentPlaylist;
-    }
 
-    public Track getCurrentTrack(){
-        return currentPlaylist.getTrack(currentTrackNumber);
-    }
+    //DAVID SUETTA
+    public void setShuffle(boolean shuffle) { this.shuffle = shuffle; }
 
-    public int getCurrentSec(){
-        return audioPlayer.position()/1000;
-    }
+    //DAVID GUETTA
+    public TimeProperty getCurrentTimeProperty(){ return currentTime; }
 
+    public Playlist getCurrentPlaylist() { return currentPlaylist; }
 
-    public boolean isShuffle() {
-        return shuffle;
-    }
+    public Track getCurrentTrack(){ return currentPlaylist.getTrack(currentTrackNumber); }
 
-    public void setShuffle(boolean shuffle) {
-        this.shuffle = shuffle;
-    }
+    public int getCurrentSec(){ return audioPlayer.position()/1000; }
+
+    public boolean isShuffle() { return shuffle; }
+
+    public boolean isPlaying(){ return isPlaying; }
 
 }

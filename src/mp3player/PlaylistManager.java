@@ -15,25 +15,33 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class PlaylistManager {
-    Playlist aktuellePlaylist;
-    ArrayList<Playlist> plList = new ArrayList<>();
-    BufferedImage trackImage;
 
+    private Playlist aktuellePlaylist;
+    private ArrayList<Playlist> plList = new ArrayList<>();
+    private BufferedImage trackImage;
+
+
+    //Kontruktor:
     public PlaylistManager(){
-
     }
 
+
+    //Playlist einlesen und spreichern:
     public Playlist getPlaylist(String name){
+
         Playlist pl = new Playlist(name);
         Path file = Paths.get(name);
+
         try {
             BufferedReader reader = Files.newBufferedReader(file);
             String zeile = null;
             while ((zeile = reader.readLine()) != null) {
+
+                //Tracks Zeile für Zeile einlesen und als Objekt in die Playlist speichern:
                 try {
                     Mp3File mp3file = new Mp3File(zeile);
                     ID3v1 id3v1Tag = mp3file.getId3v1Tag();
-                    //TODO exception für nicht vorhandenes Bild
+
                     if(mp3file.getId3v2Tag().getAlbumImage()!=null) {
                          trackImage = ImageIO.read(new ByteArrayInputStream(mp3file.getId3v2Tag().getAlbumImage()));
                     }
@@ -41,6 +49,7 @@ public class PlaylistManager {
                         File newFile = new File("files/cover.png");
                         trackImage = ImageIO.read(newFile);
                     }
+
                     Track newTrack = new Track(id3v1Tag.getTitle(), id3v1Tag.getArtist(), zeile,mp3file.getLengthInSeconds(),trackImage);
                     pl.addTrack(newTrack);
 
@@ -54,6 +63,7 @@ public class PlaylistManager {
         } catch (IOException x) {
             System.err.format("IOException: %s%n", x);
         }
+
         plList.add(pl);
         return pl;
     }

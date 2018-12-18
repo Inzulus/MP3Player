@@ -12,18 +12,23 @@ import mp3player.Track;
 
 import java.io.File;
 
+//TODO gehört das zu Ressourcen? AND Bild neben den Infos?
 public class TrackListCell extends ListCell<Track> {
+
     private Pane view;
     private Label titleLabel;
     private Label artistLabel;
     private ImageView iV;
 
+
+    //Kontruktor:
     public TrackListCell(){
         VBox trackPane = new VBox();
         titleLabel = new Label();
         artistLabel = new Label();
-        trackPane.getChildren().addAll(titleLabel,artistLabel);
         iV = new ImageView();
+
+        trackPane.getChildren().addAll(titleLabel,artistLabel);
         ImageViewPane viewPane = new ImageViewPane(iV);
 
         view = new HBox();
@@ -31,8 +36,11 @@ public class TrackListCell extends ListCell<Track> {
         this.setGraphic(view);
     }
 
+
+    //Schon erzeugte und benutzte Zellen wiederverwenden:
     protected void updateItem(Track item, boolean empty){
         super.updateItem(item,empty);
+
         if(item!=null){
             titleLabel.setText(item.getName());
             artistLabel.setText(item.getArtist());

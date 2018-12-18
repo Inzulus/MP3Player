@@ -13,7 +13,7 @@ import resources.*;
 
 import java.io.File;
 
-
+//TODO Playlist in eine neue View packen:
 public class PlayerView extends Application {
 
     private InfoBox ibox = new InfoBox();
@@ -24,6 +24,8 @@ public class PlayerView extends Application {
     private VolumeSlider vSlider = new VolumeSlider();
     private Stage stage;
 
+
+    //Zusammenbauen und erzeugen der PlayerView:
     @Override
     public void start(Stage primaryStage){
         stage = primaryStage;
@@ -36,12 +38,9 @@ public class PlayerView extends Application {
 
         root.setBottom(playBox);
         root.setCenter(cBox.create());
-        //root.setRight(plView.create());
         root.setTop(ibox.create());
 
         bigHBox.getChildren().addAll(root,plView.create());
-
-
 
         Scene scene = new Scene(bigHBox);
         File file = new File("files/style.css");
@@ -54,6 +53,7 @@ public class PlayerView extends Application {
     }
 
 
+    //GET them all:
     public Stage getStage(){
         return stage;
     }

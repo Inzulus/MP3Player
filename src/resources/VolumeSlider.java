@@ -10,16 +10,21 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class VolumeSlider {
+
     private Slider volumeSlider = new Slider();
     private ToggleButton muteButton = new ToggleButton();
 
+
+    //Create:
     public HBox create(){
         HBox hbox = new HBox();
 
+        //Wertebereich:
         volumeSlider.setMin(0);
         volumeSlider.setMax(2);
         volumeSlider.adjustValue(1);
 
+        //MuteButton:
         try {
             Image playImage = new Image(new FileInputStream("files/Icons/muteButton.png"));
             muteButton.setGraphic(new ImageView(playImage));
@@ -28,11 +33,12 @@ public class VolumeSlider {
         }
         muteButton.setId("muteButton");
 
-
         hbox.getChildren().addAll(muteButton,volumeSlider);
         return hbox;
     }
 
+
+    //GETTER:
     public Slider getVolumeSlider(){
         return volumeSlider;
     }

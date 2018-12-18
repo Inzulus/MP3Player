@@ -25,6 +25,8 @@ public class PlaylistBox {
     private Button settingsButton = new Button("Einstellungen");
     private Button openPlaylistButton = new Button("open");
 
+
+    //Create the Playlist:
     public VBox create() {
         VBox vBox = new VBox();
         HBox topBox = new HBox();
@@ -40,11 +42,15 @@ public class PlaylistBox {
         return vBox;
     }
 
+
+    //Playlist in die Zellen speichern:
     public void loadPlaylist(Playlist pl ){
         ObservableList<Track> observableList = FXCollections.observableArrayList();
+
         for(int i = 0;i<pl.getTrackCount();i++){
             observableList.add(pl.getTrack(i));
         }
+
         plList.setItems(observableList);
         plList.setCellFactory(new Callback<ListView<Track>, ListCell<Track>>() {
             @Override
@@ -52,11 +58,10 @@ public class PlaylistBox {
                 return new TrackListCell();
             }
         });
-
-
-
     }
 
+
+    //David Guetta:
     public ListView<Track> getPlList() {
         return plList;
     }

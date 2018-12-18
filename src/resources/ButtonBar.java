@@ -11,8 +11,8 @@ import javafx.scene.layout.HBox;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+//TODO Ausgewählt anzeigen bei Shuffle
 public class ButtonBar {
-
 
     private Button playButton = new Button("");
     private Button nextButton = new Button("");
@@ -22,12 +22,11 @@ public class ButtonBar {
     private HBox bBar = new HBox();
 
 
-
+    //Create the Bar full of Buttons:
     public HBox create(){
         createButtons();
 
         bBar.getChildren().addAll(prevButton,playButton,nextButton,shuffleButton);
-        //bBar.getChildren().remove(playButton);
         bBar.setPadding(new Insets(10));
         bBar.setSpacing(10);
         bBar.setAlignment(Pos.BASELINE_CENTER);
@@ -37,6 +36,7 @@ public class ButtonBar {
     }
 
     public void createButtons(){
+
         //Play-Button:
         try {
             Image playImage = new Image(new FileInputStream("files/Icons/playButton.png"));
@@ -83,6 +83,8 @@ public class ButtonBar {
         shuffleButton.setId("shuffleButton");
     }
 
+
+    //David Guetta:
     public HBox getHBox(){
         return bBar;
     }

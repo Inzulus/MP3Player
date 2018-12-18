@@ -6,12 +6,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 
+//TODO vllt vorspulen
 public class PositionSlider {
 
     private Slider slider = new Slider();
     private Label lTime = new Label("0:00");
     private Label rTime = new Label("0:00");
-    //TODO 63
+
+
+    //Create:
     public HBox create(){
         HBox sliderBox = new HBox();
 
@@ -19,13 +22,14 @@ public class PositionSlider {
         slider.setMax(0);
         slider.setValue(0);
 
-
         sliderBox.getChildren().addAll(lTime,slider,rTime);
         sliderBox.setAlignment(Pos.BASELINE_CENTER);
-        return sliderBox;
 
+        return sliderBox;
     }
 
+
+    //GETTER:
     public Slider getSlider() {
         return slider;
     }

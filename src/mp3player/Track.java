@@ -4,12 +4,15 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 
 public class Track {
+
     private String name;
     private String artist;
     private String path;
     private BufferedImage image;
     private long length;
 
+
+    //Kontruktor:
     public Track(String name, String artist, String path,long length, BufferedImage image){
         this.artist = artist;
         this.name = name;
@@ -18,6 +21,8 @@ public class Track {
         this.image = image;
     }
 
+
+    //David Guetta:
     public String getName() {
         return name;
     }
@@ -38,11 +43,10 @@ public class Track {
         return length;
     }
 
+
+    //TOSTRING:
     @Override
     public String toString(){
           return name+" - "+artist+"   "+length/60+":"+length%60;
     }
-
-
-
 }
