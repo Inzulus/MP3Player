@@ -5,12 +5,17 @@
     -fx-padding: 3 6 6 6;
 }
 
+.hbox{
+    -fx-background-color: beige;
+}
+
 .button {
      -fx-background-color: transparent;
 }
 
 #playButton {
     -fx-border-style: none;
+
 }
 
 #nextButton {
@@ -23,7 +28,6 @@
 }
 
 #shuffleButton {
-    -fx-background-color: transparent;
 }
 
 

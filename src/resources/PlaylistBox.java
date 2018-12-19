@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,15 +17,18 @@ import javafx.util.Callback;
 import mp3player.Playlist;
 import mp3player.Track;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 
 public class PlaylistBox {
 
     private ListView<Track> plList = new ListView<Track>();
 
     private Label playlistName = new Label("playlistname");
-    private Button playButton = new Button("Play");
-    private Button settingsButton = new Button("Einstellungen");
-    private Button openPlaylistButton = new Button("open");
+    //private Button playButton = new Button("Play");
+    //private Button settingsButton = new Button("Einstellungen");
+    private Button openPlaylistButton = new Button("");
 
 
     //Create the Playlist:
@@ -32,10 +37,24 @@ public class PlaylistBox {
         HBox topBox = new HBox();
         HBox playlistInfo = new HBox();
 
+        playlistName.setPadding(new Insets(10));
 
-        playlistInfo.getChildren().addAll(playlistName, openPlaylistButton);
+        //openPlaylist-Button:
+        try {
+            Image playImage = new Image(new FileInputStream("files/Icons/playListButton.png"));
+            ImageView iv =new ImageView(playImage);
+            iv.setFitWidth(30);
+            iv.setFitHeight(30);
+            openPlaylistButton.setGraphic(iv);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        openPlaylistButton.setId("openPlaylistButton");
+
+
+        playlistInfo.getChildren().addAll(openPlaylistButton,playlistName);
         playlistInfo.setSpacing(10);
-        topBox.getChildren().addAll(playButton, playlistInfo, settingsButton);
+        topBox.getChildren().addAll(playlistInfo);
         topBox.setSpacing(10);
         topBox.setPadding(new Insets(10));
         vBox.getChildren().addAll(topBox, plList);
@@ -70,13 +89,6 @@ public class PlaylistBox {
         return playlistName;
     }
 
-    public Button getPlayButton() {
-        return playButton;
-    }
-
-    public Button getSettingsButton() {
-        return settingsButton;
-    }
 
     public Button getOpenPlaylistButton() {
         return openPlaylistButton;

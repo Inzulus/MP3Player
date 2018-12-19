@@ -16,9 +16,9 @@ import mp3player.MP3Player;
 import java.io.File;
 
 
-public class PlayerViewController {
+public class PlaylistViewController {
 
-    private PlayerView view;
+    private PlaylistView view;
     private MP3Player player;
     //private SimpleIntegerProperty currentTime = new SimpleIntegerProperty();
     private FileChooser fileChooser = new FileChooser();
@@ -46,8 +46,8 @@ public class PlayerViewController {
 
 
     //Kontruktor:
-    public PlayerViewController(MP3Player player, Main app){
-        view = new PlayerView();
+    public PlaylistViewController(MP3Player player, Main app){
+        view = new PlaylistView();
         this.player = player;
         currentApplication = app;
         initialize();
@@ -100,6 +100,7 @@ public class PlayerViewController {
         view.getbBar().getShuffleButton().addEventHandler(ActionEvent.ACTION,event -> {
             player.setShuffle(view.getbBar().getShuffleButton().isSelected());
         });
+
         view.getbBar().getViewButton().addEventHandler(ActionEvent.ACTION,event -> {
             currentApplication.changeView();
         });
@@ -140,6 +141,5 @@ public class PlayerViewController {
 
 
     //GETTER:
-    public PlayerView getView() { return view; }
+    public PlaylistView getView() { return view; }
 }
-

@@ -14,8 +14,10 @@ public class InfoBox {
     //Create the Info:
     public VBox create(){
         VBox ibox = new VBox();
+
+        ibox.getStyleClass().add("hbox");
         ibox.setAlignment(Pos.BASELINE_CENTER);
-        ibox.setStyle("-fx-background-color: rgb(240,240,240);");
+        //ibox.setStyle("-fx-background-color: rgb(240,240,240);");
         ibox.getChildren().addAll(lSongTitle,lSongInterpret);
         ibox.setPadding(new Insets(5));
 

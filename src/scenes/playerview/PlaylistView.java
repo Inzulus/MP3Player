@@ -14,7 +14,7 @@ import resources.*;
 import java.io.File;
 
 //TODO Playlist in eine neue View packen:
-public class PlayerView extends Application {
+public class PlaylistView extends Application {
 
     private InfoBox ibox = new InfoBox();
     private ButtonBar bBar = new ButtonBar();
@@ -24,6 +24,7 @@ public class PlayerView extends Application {
     private VolumeSlider vSlider = new VolumeSlider();
     private Stage stage;
     private Scene scene;
+
     private HBox bigHBox = new HBox();
 
 
@@ -32,7 +33,6 @@ public class PlayerView extends Application {
     public void start(Stage primaryStage){
         stage = primaryStage;
 
-        //HBox bigHBox = new HBox();
 
         bigHBox.getStyleClass().add("hbox");
         BorderPane root = new BorderPane();
@@ -46,16 +46,15 @@ public class PlayerView extends Application {
         root.setCenter(cBox.create());
         root.setTop(ibox.create());
 
-        bigHBox.getChildren().addAll(root);
+        bigHBox.getChildren().addAll(root,plView.create());
 
-        /*scene = new Scene(bigHBox);
+        /*Scene scene = new Scene(bigHBox);
         File file = new File("files/style.css");
         scene.getStylesheets().add(file.toURI().toString());*/
 
         /*primaryStage.setTitle("MP3Player");
         primaryStage.setScene(scene);
-        primaryStage.show();
-        */
+        primaryStage.show();*/
     }
 
 
@@ -63,6 +62,7 @@ public class PlayerView extends Application {
     public HBox getBigHBox(){
         return bigHBox;
     }
+
 
     public Stage getStage(){
         return stage;
@@ -92,5 +92,7 @@ public class PlayerView extends Application {
         return vSlider;
     }
 
-    public Scene getScene() { return scene; }
+    public Scene getScene() {
+        return scene;
+    }
 }

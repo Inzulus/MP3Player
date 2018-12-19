@@ -28,5 +28,9 @@ public class Playlist {
         return songs.size();
     }
 
+    public String getName(){
+        return name;
+    }
+
 
 }

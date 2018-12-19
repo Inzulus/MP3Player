@@ -18,6 +18,7 @@ public class ButtonBar {
     private Button nextButton = new Button("");
     private Button prevButton = new Button("");
     private Button pauseButton = new Button("");
+    private Button viewButton = new Button("");
     private ToggleButton shuffleButton = new ToggleButton("");
     private HBox bBar = new HBox();
 
@@ -26,21 +27,40 @@ public class ButtonBar {
     public HBox create(){
         createButtons();
 
-        bBar.getChildren().addAll(prevButton,playButton,nextButton,shuffleButton);
+        bBar.getStyleClass().add("hbox");
+
+        bBar.getChildren().addAll(viewButton,prevButton,playButton,nextButton,shuffleButton);
         bBar.setPadding(new Insets(10));
         bBar.setSpacing(10);
         bBar.setAlignment(Pos.BASELINE_CENTER);
-        bBar.setStyle("-fx-background-color: lightgrey;");
+        //bBar.setStyle("-fx-background-color: lightgrey;");
 
         return bBar;
     }
 
     public void createButtons(){
 
+        //View-Button:
+        try{
+            Image viewImage = new Image(new FileInputStream("files/Icons/viewPlaylistButton.png"));
+            ImageView ivPlaylist =new ImageView(viewImage);
+            ivPlaylist.setFitWidth(20);
+            ivPlaylist.setFitHeight(20);
+            viewButton.setGraphic(ivPlaylist);
+
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         //Play-Button:
         try {
             Image playImage = new Image(new FileInputStream("files/Icons/playButton.png"));
-            playButton.setGraphic(new ImageView(playImage));
+            ImageView ivPlay =new ImageView(playImage);
+            ivPlay.setFitWidth(45);
+            ivPlay.setFitHeight(45);
+            playButton.setGraphic(ivPlay);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -49,7 +69,10 @@ public class ButtonBar {
         //Next-Button:
         try {
             Image nextImage = new Image(new FileInputStream("files/Icons/skipButton.png"));
-            nextButton.setGraphic(new ImageView(nextImage));
+            ImageView ivNext =new ImageView(nextImage);
+            ivNext.setFitWidth(30);
+            ivNext.setFitHeight(30);
+            nextButton.setGraphic(ivNext);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -58,7 +81,10 @@ public class ButtonBar {
         //Prev-Button:
         try {
             Image prevImage = new Image(new FileInputStream("files/Icons/prevButton.png"));
-            prevButton.setGraphic(new ImageView(prevImage));
+            ImageView ivPrev =new ImageView(prevImage);
+            ivPrev.setFitWidth(30);
+            ivPrev.setFitHeight(30);
+            prevButton.setGraphic(ivPrev);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -67,7 +93,10 @@ public class ButtonBar {
         //pauseButton:
         try {
             Image pauseImage = new Image(new FileInputStream("files/Icons/pauseButton.png"));
-            pauseButton.setGraphic(new ImageView(pauseImage));
+            ImageView iv =new ImageView(pauseImage);
+            iv.setFitWidth(45);
+            iv.setFitHeight(45);
+            pauseButton.setGraphic(iv);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -76,7 +105,10 @@ public class ButtonBar {
         //Shuffle-Button:
         try {
             Image shuffleImage = new Image(new FileInputStream("files/Icons/shuffleButton.png"));
-            shuffleButton.setGraphic(new ImageView(shuffleImage));
+            ImageView iv =new ImageView(shuffleImage);
+            iv.setFitWidth(15);
+            iv.setFitHeight(15);
+            shuffleButton.setGraphic(iv);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -107,5 +139,9 @@ public class ButtonBar {
 
     public Button getPauseButton(){
         return pauseButton;
+    }
+
+    public Button getViewButton(){
+        return viewButton;
     }
 }
