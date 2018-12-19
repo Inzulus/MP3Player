@@ -1,3 +1,5 @@
+/*TODO Progressbar, Slider abstand zueinander, Slider Thumb*/
+
 .dfghjklbutton{
     -fx-text-fill: rgb(49, 89, 23);
     -fx-border-color: rgb(49, 89, 23);
@@ -10,8 +12,21 @@
 }
 
 .button {
-     -fx-background-color: transparent;
+    -fx-background-color: transparent;
 }
+
+.label {
+      -fx-font-weight: bold;
+      -fx-text-fill: #333333;
+      -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+    }
+
+/*.slider .track {
+    -fx-background-color:null;  //Hide the Track
+    -fx-background-insets: 1 0 -1 0, 0, 1;
+    -fx-background-radius: 2.5, 2.5, 1.5;
+    -fx-padding: 0.208333em;
+}*/
 
 #playButton {
     -fx-border-style: none;

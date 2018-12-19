@@ -13,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
 import mp3player.Playlist;
 import mp3player.Track;
@@ -37,7 +39,9 @@ public class PlaylistBox {
         HBox topBox = new HBox();
         HBox playlistInfo = new HBox();
 
-        playlistName.setPadding(new Insets(10));
+        playlistName.setPadding(new Insets(8));
+        playlistName.setFont(Font.font("Century Gothic Regular", FontWeight.NORMAL, 15));
+
 
         //openPlaylist-Button:
         try {
@@ -88,7 +92,6 @@ public class PlaylistBox {
     public Label getPlaylistName() {
         return playlistName;
     }
-
 
     public Button getOpenPlaylistButton() {
         return openPlaylistButton;

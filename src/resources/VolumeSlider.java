@@ -24,6 +24,7 @@ public class VolumeSlider {
         volumeSlider.setMin(0);
         volumeSlider.setMax(2);
         volumeSlider.adjustValue(1);
+        volumeSlider.setMaxWidth(80);
 
         //MuteButton:
         try {

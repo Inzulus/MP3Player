@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class InfoBox {
 
@@ -15,9 +17,9 @@ public class InfoBox {
     public VBox create(){
         VBox ibox = new VBox();
 
+        lSongTitle.setFont(Font.font("Century Gothic Regular", FontWeight.NORMAL, 18));
         ibox.getStyleClass().add("hbox");
         ibox.setAlignment(Pos.BASELINE_CENTER);
-        //ibox.setStyle("-fx-background-color: rgb(240,240,240);");
         ibox.getChildren().addAll(lSongTitle,lSongInterpret);
         ibox.setPadding(new Insets(5));
 
