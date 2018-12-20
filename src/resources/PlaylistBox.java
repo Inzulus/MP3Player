@@ -40,8 +40,8 @@ public class PlaylistBox {
         HBox topBox = new HBox();
         HBox playlistInfo = new HBox();
 
-        playlistName.setPadding(new Insets(8));
-        playlistName.setFont(Font.font("Century Gothic Regular", FontWeight.NORMAL, 15));
+        playlistName.setPadding(new Insets(5,0,0,5));
+        playlistName.setFont(Font.font("Century Gothic Regular", FontWeight.BOLD, 15));
 
 
         //openPlaylist-Button:

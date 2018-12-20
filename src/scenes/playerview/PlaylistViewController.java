@@ -62,13 +62,13 @@ public class PlaylistViewController {
 
         //PlaylistBox:
         view.getPlaylistBox().loadPlaylist(player.getCurrentPlaylist());
-        view.getPlaylistBox().getPlaylistName().setText(player.getCurrentPlaylist().getName());
+        view.getPlaylistBox().getPlaylistName().setText(player.getCurrentPlaylist().getName().replace(".m3u",""));
         view.getPlaylistBox().getOpenPlaylistButton().addEventHandler(ActionEvent.ACTION,event -> {
             File file = fileChooser.showOpenDialog(view.getStage());
             player.loadPlaylist(file.getPath());
             view.getPlaylistBox().loadPlaylist(player.getCurrentPlaylist());
 
-            view.getPlaylistBox().getPlaylistName().setText(player.getCurrentPlaylist().getName());
+            view.getPlaylistBox().getPlaylistName().setText(player.getCurrentPlaylist().getName().replace(".m3u",""));
         });
         view.getPlaylistBox().getPlList().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -85,10 +85,10 @@ public class PlaylistViewController {
 
         //ButtonBar:
         view.getbBar().getPlayButton().addEventHandler(ActionEvent.ACTION, event -> {
-            play();
+            player.play();
         });
         view.getbBar().getPauseButton().addEventHandler(ActionEvent.ACTION,event -> {
-            pause();
+            player.pause();
         });
         view.getbBar().getNextButton().addEventHandler(ActionEvent.ACTION, event -> {
             player.next();
@@ -120,22 +120,19 @@ public class PlaylistViewController {
                 ));
             }
         });
-    }
-
-
-    //Play and Pause:
-    public void play(){
-        if(!player.isPlaying()){
-            view.getbBar().getHBox().getChildren().remove(2);
-            view.getbBar().getHBox().getChildren().add(2,view.getbBar().getPauseButton());
-            player.play();
-        }
-    }
-
-    public void pause(){
-        player.pause();
-        view.getbBar().getHBox().getChildren().remove(2);
-        view.getbBar().getHBox().getChildren().add(2,view.getbBar().getPlayButton());
+        player.getIsPlayingProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(player.isPlaying()==true) {
+                    view.getbBar().getHBox().getChildren().remove(2);
+                    view.getbBar().getHBox().getChildren().add(2, view.getbBar().getPauseButton());
+                }
+                else{
+                    view.getbBar().getHBox().getChildren().remove(2);
+                    view.getbBar().getHBox().getChildren().add(2, view.getbBar().getPlayButton());
+                }
+            }
+        });
     }
 
 

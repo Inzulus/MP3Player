@@ -5,10 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import resources.*;
 
@@ -47,9 +44,8 @@ public class PlaylistView {
         VBox vBox = new VBox();
         vBox.getChildren().addAll(plView.create(),vSlider.create());
 
-
         bigHBox.getChildren().addAll(root,vBox);
-
+        HBox.setHgrow(vBox, Priority.ALWAYS);
     }
 
 

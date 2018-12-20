@@ -1,7 +1,6 @@
 package scenes.playerview;
 
 import application.Main;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,7 +19,6 @@ public class PlayerViewController {
 
     private PlayerView view;
     private MP3Player player;
-    //private SimpleIntegerProperty currentTime = new SimpleIntegerProperty();
     private FileChooser fileChooser = new FileChooser();
     private Main currentApplication;
 
@@ -86,10 +84,10 @@ public class PlayerViewController {
 
         //ButtonBar:
         view.getbBar().getPlayButton().addEventHandler(ActionEvent.ACTION, event -> {
-            play();
+            player.play();
         });
         view.getbBar().getPauseButton().addEventHandler(ActionEvent.ACTION,event -> {
-            pause();
+            player.pause();
         });
         view.getbBar().getNextButton().addEventHandler(ActionEvent.ACTION, event -> {
             player.next();
@@ -120,24 +118,20 @@ public class PlayerViewController {
                 ));
             }
         });
+        player.getIsPlayingProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(player.isPlaying()==true) {
+                    view.getbBar().getHBox().getChildren().remove(2);
+                    view.getbBar().getHBox().getChildren().add(2, view.getbBar().getPauseButton());
+                }
+                else{
+                    view.getbBar().getHBox().getChildren().remove(2);
+                    view.getbBar().getHBox().getChildren().add(2, view.getbBar().getPlayButton());
+                }
+            }
+        });
     }
-
-
-    //Play and Pause:
-    public void play(){
-        if(!player.isPlaying()){
-            view.getbBar().getHBox().getChildren().remove(2);
-            view.getbBar().getHBox().getChildren().add(2,view.getbBar().getPauseButton());
-            player.play();
-        }
-    }
-
-    public void pause(){
-        player.pause();
-        view.getbBar().getHBox().getChildren().remove(2);
-        view.getbBar().getHBox().getChildren().add(2,view.getbBar().getPlayButton());
-    }
-
 
     //GETTER:
     public PlayerView getView() { return view; }

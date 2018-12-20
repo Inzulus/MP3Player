@@ -31,8 +31,6 @@ public class PlayerView {
     public void start(Stage primaryStage){
         stage = primaryStage;
 
-        //HBox bigHBox = new HBox();
-
         bigHBox.getStyleClass().add("hbox");
         BorderPane root = new BorderPane();
         VBox playBox = new VBox();

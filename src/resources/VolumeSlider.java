@@ -1,5 +1,6 @@
 package resources;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.VerticalDirection;
@@ -30,7 +31,6 @@ public class VolumeSlider {
         //volumeSlider.setMinHeight(50);
         //volumeSlider.setMinWidth(100);
         //volumeSlider.setMaxWidth(100);
-        volumeSlider.setId("volumeSlider");
 
         //MuteButton:
         try {
@@ -42,10 +42,10 @@ public class VolumeSlider {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        muteButton.setId("muteButton");
 
         hbox.getChildren().addAll(muteButton,volumeSlider);
         hbox.setAlignment(Pos.BASELINE_CENTER);
+        hbox.setPadding(new Insets(10,0,0,0));
         return hbox;
     }
 

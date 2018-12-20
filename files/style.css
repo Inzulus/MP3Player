@@ -21,10 +21,6 @@
     -fx-background-color: #666666;
 }
 
-#volumeSlider {
-    -fx-orientation: horizontal;
-}
-
 #titleLabelCell {
     -fx-font-weight: bold;
 }

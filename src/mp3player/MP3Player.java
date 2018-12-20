@@ -2,6 +2,7 @@ package mp3player;
 
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
+import javafx.beans.property.SimpleBooleanProperty;
 
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class MP3Player {
     private Thread playThread;
     private Thread timeThread;
     private TimeProperty currentTime = new TimeProperty();
+    private SimpleBooleanProperty isPlayingProperty = new SimpleBooleanProperty();
 
     private boolean isPlaying = false;
     private boolean shuffle;
@@ -103,11 +105,14 @@ public class MP3Player {
     public void play(){
         info();
         isPlaying = true;
+        isPlayingProperty.set(true);
         playThread();
     }
 
     public void play(Track track,int currentTrackNumber){
         isPlaying = true;
+
+        isPlayingProperty.set(true);
         this.currentTrackNumber = currentTrackNumber;
         minim.stop();
         audioPlayer = minim.loadMP3File(track.getPath());
@@ -196,15 +201,14 @@ public class MP3Player {
     //Pause/Stop:
     public void pause(){
         isPlaying = false;
+
+        isPlayingProperty.set(false);
         audioPlayer.pause();
     }
 
-    public void unpause(){
-        isPlaying = true;
-        audioPlayer.play();
-    }
 
     public void stop(){
+        isPlayingProperty.set(false);
         audioPlayer.rewind();
         audioPlayer.pause();
         minim.stop();
@@ -220,7 +224,15 @@ public class MP3Player {
     //DAVID SUETTA
     public void setShuffle(boolean shuffle) { this.shuffle = shuffle; }
 
+    public void setIsPlayingProperty(boolean playing){
+        isPlayingProperty.set(playing);
+    }
+
     //DAVID GUETTA
+
+    public SimpleBooleanProperty getIsPlayingProperty(){
+        return isPlayingProperty;
+    }
     public TimeProperty getCurrentTimeProperty(){ return currentTime; }
 
     public Playlist getCurrentPlaylist() { return currentPlaylist; }

@@ -57,12 +57,21 @@ public class Main extends Application {
 
     public void changeView(){
         if(!plView) {
+            /*if(player.isPlaying()) {
+                plvc.getView().getbBar().getHBox().getChildren().remove(2);
+                plvc.getView().getbBar().getHBox().getChildren().add(2, plvc.getView().getbBar().getPauseButton());
+            }
+            */
             pStage.setScene(scenePlaylist);
             pStage.show();
             plView = true;
         }
         else{
             pStage.setScene(scenePlayer);
+            /*if(player.isPlaying()) {
+                pvc.getView().getbBar().getHBox().getChildren().remove(2);
+                pvc.getView().getbBar().getHBox().getChildren().add(2, pvc.getView().getbBar().getPauseButton());
+            }*/
             pStage.show();
             plView = false;
         }
