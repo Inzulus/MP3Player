@@ -1,5 +1,5 @@
 package mp3player;
 
 public interface InfoListener {
-    public void infoReceived(InfoEvent event);
+    void infoReceived(InfoEvent event);
 }

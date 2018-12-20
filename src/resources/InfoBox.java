@@ -18,6 +18,7 @@ public class InfoBox {
         VBox ibox = new VBox();
 
         lSongTitle.setFont(Font.font("Century Gothic Regular", FontWeight.NORMAL, 18));
+        lSongTitle.setId("Songtitle");
         ibox.getStyleClass().add("hbox");
         ibox.setAlignment(Pos.BASELINE_CENTER);
         ibox.getChildren().addAll(lSongTitle,lSongInterpret);

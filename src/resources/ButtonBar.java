@@ -30,8 +30,6 @@ public class ButtonBar {
         bBar.getStyleClass().add("hbox");
 
         bBar.getChildren().addAll(viewButton,prevButton,playButton,nextButton,shuffleButton);
-        bBar.setPadding(new Insets(10));
-        bBar.setSpacing(10);
         bBar.setAlignment(Pos.BASELINE_CENTER);
         //bBar.setStyle("-fx-background-color: lightgrey;");
 
@@ -112,7 +110,6 @@ public class ButtonBar {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        shuffleButton.setId("shuffleButton");
     }
 
 

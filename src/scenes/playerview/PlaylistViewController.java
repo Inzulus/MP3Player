@@ -20,7 +20,6 @@ public class PlaylistViewController {
 
     private PlaylistView view;
     private MP3Player player;
-    //private SimpleIntegerProperty currentTime = new SimpleIntegerProperty();
     private FileChooser fileChooser = new FileChooser();
     private Main currentApplication;
 

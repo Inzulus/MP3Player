@@ -1,6 +1,8 @@
 package resources;
 
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.VerticalDirection;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -24,7 +26,11 @@ public class VolumeSlider {
         volumeSlider.setMin(0);
         volumeSlider.setMax(2);
         volumeSlider.adjustValue(1);
-        volumeSlider.setMaxWidth(80);
+        //volumeSlider.setMaxHeight(50);
+        //volumeSlider.setMinHeight(50);
+        //volumeSlider.setMinWidth(100);
+        //volumeSlider.setMaxWidth(100);
+        volumeSlider.setId("volumeSlider");
 
         //MuteButton:
         try {

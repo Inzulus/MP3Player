@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -14,7 +15,7 @@ import resources.*;
 import java.io.File;
 
 //TODO Playlist in eine neue View packen:
-public class PlaylistView extends Application {
+public class PlaylistView {
 
     private InfoBox ibox = new InfoBox();
     private ButtonBar bBar = new ButtonBar();
@@ -29,7 +30,6 @@ public class PlaylistView extends Application {
 
 
     //Zusammenbauen und erzeugen der PlaylistView:
-    @Override
     public void start(Stage primaryStage){
         stage = primaryStage;
 
@@ -37,24 +37,19 @@ public class PlaylistView extends Application {
         bigHBox.getStyleClass().add("hbox");
         BorderPane root = new BorderPane();
         VBox playBox = new VBox();
-        HBox allSliders = new HBox();
-        allSliders.getChildren().addAll(vSlider.create(),pSlider.create());
-        playBox.getChildren().addAll(allSliders,bBar.create());
+        playBox.getChildren().addAll(pSlider.create(),bBar.create());
         playBox.setPadding(new Insets(5));
 
         root.setBottom(playBox);
         root.setCenter(cBox.create());
         root.setTop(ibox.create());
 
-        bigHBox.getChildren().addAll(root,plView.create());
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(plView.create(),vSlider.create());
 
-        /*Scene scene = new Scene(bigHBox);
-        File file = new File("files/style.css");
-        scene.getStylesheets().add(file.toURI().toString());*/
 
-        /*primaryStage.setTitle("MP3Player");
-        primaryStage.setScene(scene);
-        primaryStage.show();*/
+        bigHBox.getChildren().addAll(root,vBox);
+
     }
 
 

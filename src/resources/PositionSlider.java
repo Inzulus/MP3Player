@@ -22,9 +22,14 @@ public class PositionSlider {
         slider.setMin(0);
         slider.setMax(0);
         slider.setValue(0);
+        slider.setId("positionSlider");
+        slider.setMaxWidth(200);
+        slider.setMinWidth(200);
+
 
         sliderBox.getChildren().addAll(lTime,slider,rTime);
         sliderBox.setAlignment(Pos.BASELINE_CENTER);
+        sliderBox.setSpacing(5);
 
         return sliderBox;
     }

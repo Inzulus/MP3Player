@@ -1,14 +1,6 @@
-/*TODO Progressbar, Slider abstand zueinander, Slider Thumb*/
-
-.dfghjklbutton{
-    -fx-text-fill: rgb(49, 89, 23);
-    -fx-border-color: rgb(49, 89, 23);
-    -fx-border-radius: 5;
-    -fx-padding: 3 6 6 6;
-}
-
+/*TODO Progressbar, Slider Abstand zueinander, Slider Thumb*/
 .hbox{
-    -fx-background-color: beige;
+    -fx-background-color: rgb(255, 255, 255);
 }
 
 .button {
@@ -16,21 +8,36 @@
 }
 
 .label {
-      -fx-font-weight: bold;
-      -fx-text-fill: #333333;
-      -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+     -fx-text-fill: #333333;
+     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
     }
 
-/*.slider .track {
-    -fx-background-color:null;  //Hide the Track
-    -fx-background-insets: 1 0 -1 0, 0, 1;
-    -fx-background-radius: 2.5, 2.5, 1.5;
-    -fx-padding: 0.208333em;
-}*/
+.slider .track {
+    -fx-pref-height: 1.2px;
+    -fx-background-color: #666666;
+}
+
+.slider .thumb {
+    -fx-background-color: #666666;
+}
+
+#volumeSlider {
+    -fx-orientation: horizontal;
+}
+
+#titleLabelCell {
+    -fx-font-weight: bold;
+}
+
+#artistLabelCell {
+}
+
+#Songtitle {
+    -fx-font-weight: bold;
+}
 
 #playButton {
     -fx-border-style: none;
-
 }
 
 #nextButton {
@@ -42,7 +49,11 @@
 #pauseButton {
 }
 
-#shuffleButton {
+.toggle-button {
+    -fx-background-color: white;
+}
+.toggle-button:selected {
+    -fx-background-color: rgb(162, 162, 162)
 }
 
 

@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -55,13 +56,23 @@ public class PlaylistBox {
         }
         openPlaylistButton.setId("openPlaylistButton");
 
+        AnchorPane anchorPane = new AnchorPane();
+
+        AnchorPane.setLeftAnchor(plList, 10.0);
+        AnchorPane.setRightAnchor(plList, 10.0);
+        AnchorPane.setTopAnchor(plList, 0.0);
+        AnchorPane.setBottomAnchor(plList, 0.0);
+
+        plList.setPrefWidth(300);
+        anchorPane.getChildren().addAll(plList);
+
 
         playlistInfo.getChildren().addAll(openPlaylistButton,playlistName);
         playlistInfo.setSpacing(10);
         topBox.getChildren().addAll(playlistInfo);
         topBox.setSpacing(10);
         topBox.setPadding(new Insets(10));
-        vBox.getChildren().addAll(topBox, plList);
+        vBox.getChildren().addAll(topBox, anchorPane);
         return vBox;
     }
 

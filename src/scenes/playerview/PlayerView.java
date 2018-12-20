@@ -14,7 +14,7 @@ import resources.*;
 import java.io.File;
 
 //TODO Playlist in eine neue View packen:
-public class PlayerView extends Application {
+public class PlayerView {
 
     private InfoBox ibox = new InfoBox();
     private ButtonBar bBar = new ButtonBar();
@@ -28,7 +28,6 @@ public class PlayerView extends Application {
 
 
     //Zusammenbauen und erzeugen der PlaylistView:
-    @Override
     public void start(Stage primaryStage){
         stage = primaryStage;
 
@@ -38,9 +37,12 @@ public class PlayerView extends Application {
         BorderPane root = new BorderPane();
         VBox playBox = new VBox();
         HBox allSliders = new HBox();
-        allSliders.getChildren().addAll(vSlider.create(),pSlider.create());
-        playBox.getChildren().addAll(allSliders,bBar.create());
+        HBox topBox = new HBox();
+
+        playBox.getChildren().addAll(pSlider.create(),bBar.create());
         playBox.setPadding(new Insets(5));
+        allSliders.getChildren().addAll(playBox);
+
 
         root.setBottom(playBox);
         root.setCenter(cBox.create());
@@ -48,14 +50,6 @@ public class PlayerView extends Application {
 
         bigHBox.getChildren().addAll(root);
 
-        /*scene = new Scene(bigHBox);
-        File file = new File("files/style.css");
-        scene.getStylesheets().add(file.toURI().toString());*/
-
-        /*primaryStage.setTitle("MP3Player");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        */
     }
 
 

@@ -25,9 +25,6 @@ public class MP3Player {
     private boolean isPlaying = false;
     private boolean shuffle;
 
-    /*public enum playStatus{
-        isPlaying,paused,stopped
-    };*/
 
 
     //Konstruktor:
@@ -39,7 +36,7 @@ public class MP3Player {
     }
 
 
-    //Synchronized:
+    //feuert das Infoevent um das Interface vom Songwechsel zu informieren:
     private synchronized void fireInfoEvent(){
         InfoEvent ie = new InfoEvent(this,getCurrentTrack());
         Iterator listener = this.listener.iterator();
@@ -70,18 +67,7 @@ public class MP3Player {
             timeThread.interrupt();
         timeThread = new Thread() {
             public void run() {
-                /*for (int i = 0; i < getCurrentTrack().getLength() && !timeThread.isInterrupted(); i++) {
-                    System.out.println(i);
-                    currentTime.setTime(audioPlayer.position()/1000);
-                    i = audioPlayer.position()/1000;
-                    try {
-                        sleep(1000);
-                    } catch (InterruptedException e) {
-                        this.interrupt();
-                        //e.printStackTrace();
-                    }
-                }*/
-                while(true){
+                                while(true){
                     System.out.println(audioPlayer.position());
                     currentTime.setTime(audioPlayer.position()/1000);
                     try {
@@ -118,7 +104,6 @@ public class MP3Player {
         info();
         isPlaying = true;
         playThread();
-        //audioPlayer.play();
     }
 
     public void play(Track track,int currentTrackNumber){
@@ -241,10 +226,6 @@ public class MP3Player {
     public Playlist getCurrentPlaylist() { return currentPlaylist; }
 
     public Track getCurrentTrack(){ return currentPlaylist.getTrack(currentTrackNumber); }
-
-    public int getCurrentSec(){ return audioPlayer.position()/1000; }
-
-    public boolean isShuffle() { return shuffle; }
 
     public boolean isPlaying(){ return isPlaying; }
 

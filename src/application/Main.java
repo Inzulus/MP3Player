@@ -2,15 +2,12 @@ package application;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import mp3player.MP3Player;
 import scenes.playerview.PlayerViewController;
 import scenes.playerview.PlaylistViewController;
 
 import java.io.File;
-
-import static javafx.application.Application.launch;
 
 public class Main extends Application {
 
@@ -21,13 +18,13 @@ public class Main extends Application {
     //ALLES wieder vorbei:
 
 
-    MP3Player player;
-    PlaylistViewController plvc;
-    PlayerViewController pvc;
-    Stage pStage;
-    boolean plView = false;
-    Scene scenePlayer;
-    Scene scenePlaylist;
+    private MP3Player player;
+    private PlaylistViewController plvc;
+    private PlayerViewController pvc;
+    private Stage pStage;
+    private boolean plView = false;
+    private Scene scenePlayer;
+    private Scene scenePlaylist;
 
     public void init(){
         player = new MP3Player();
@@ -36,13 +33,12 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         pStage = primaryStage;
         pvc.getView().start(primaryStage);
         plvc.getView().start(primaryStage);
-        //TODO
-        scenePlayer = new Scene(pvc.getView().getBigHBox());
 
+        scenePlayer = new Scene(pvc.getView().getBigHBox());
         scenePlaylist = new Scene(plvc.getView().getBigHBox());
         File file = new File("files/style.css");
         scenePlayer.getStylesheets().add(file.toURI().toString());
@@ -60,16 +56,6 @@ public class Main extends Application {
     }
 
     public void changeView(){
-        /*if(!plView){
-            pStage.setScene(scene);
-            plView=true;
-        }
-        else{
-
-            pStage.setScene(pvc.getView().getScene());
-            plView=false;
-        }
-        */
         if(!plView) {
             pStage.setScene(scenePlaylist);
             pStage.show();
