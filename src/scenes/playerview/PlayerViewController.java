@@ -56,7 +56,7 @@ public class PlayerViewController {
     //TODO remove Playlist file
     public void initialize() {
 
-        player.loadPlaylist("pl.m3u");
+        //player.loadPlaylist("pl.m3u");
         player.addInfoListener(il);
 
         //PlaylistBox:
@@ -66,7 +66,6 @@ public class PlayerViewController {
             File file = fileChooser.showOpenDialog(view.getStage());
             player.loadPlaylist(file.getPath());
             view.getPlaylistBox().loadPlaylist(player.getCurrentPlaylist());
-
             view.getPlaylistBox().getPlaylistName().setText(player.getCurrentPlaylist().getName());
         });
         view.getPlaylistBox().getPlList().setOnMouseClicked(new EventHandler<MouseEvent>() {

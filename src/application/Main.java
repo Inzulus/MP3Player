@@ -7,7 +7,8 @@ import mp3player.MP3Player;
 import scenes.playerview.PlayerViewController;
 import scenes.playerview.PlaylistViewController;
 
-import java.io.File;
+import java.io.*;
+import java.util.Properties;
 
 public class Main extends Application {
 
@@ -44,34 +45,66 @@ public class Main extends Application {
         scenePlayer.getStylesheets().add(file.toURI().toString());
         scenePlaylist.getStylesheets().add(file.toURI().toString());
 
+        try (InputStream inputStream = new FileInputStream("settings.xml")) {
+            Properties prop = new Properties();
+            prop.loadFromXML(inputStream);
+
+            primaryStage.setWidth(Double.parseDouble(
+                    prop.getProperty("width")));
+            primaryStage.setHeight(Double.parseDouble(
+                    prop.getProperty("height")));
+            player.loadPlaylist(prop.getProperty("lastPlaylist"));
+            player.setCurrentTrackNumber(Integer.parseInt(prop.getProperty("lastSong")));
+            plView=Boolean.parseBoolean(prop.getProperty("playListView"));
+            if(!Boolean.parseBoolean(prop.getProperty("playListView"))){
+                primaryStage.setScene(scenePlayer);
+            }
+            else{
+                primaryStage.setScene(scenePlaylist);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
         primaryStage.setTitle("MP3Player");
-        primaryStage.setScene(scenePlayer);
+
         primaryStage.show();
     }
 
     @Override
     public void stop() throws Exception {
+
+        try (OutputStream out = new FileOutputStream("settings.xml")) {
+            Properties properties = new Properties();
+            properties.setProperty("lastPlaylist", player.getCurrentPlaylist().getName());
+            properties.setProperty("lastSong", String.valueOf(player.getCurrentTrackNumber()));
+            properties.setProperty("playListView", String.valueOf(plView));
+            properties.setProperty("width", String.valueOf(pStage.getWidth()));
+            properties.setProperty("height",String.valueOf(pStage.getHeight()));
+            properties.storeToXML(out,"Settings XML File for MP3-Player");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         super.stop();
         player.stop();
+
     }
 
     public void changeView(){
         if(!plView) {
-            /*if(player.isPlaying()) {
-                plvc.getView().getbBar().getHBox().getChildren().remove(2);
-                plvc.getView().getbBar().getHBox().getChildren().add(2, plvc.getView().getbBar().getPauseButton());
-            }
-            */
             pStage.setScene(scenePlaylist);
             pStage.show();
             plView = true;
         }
         else{
             pStage.setScene(scenePlayer);
-            /*if(player.isPlaying()) {
-                pvc.getView().getbBar().getHBox().getChildren().remove(2);
-                pvc.getView().getbBar().getHBox().getChildren().add(2, pvc.getView().getbBar().getPauseButton());
-            }*/
             pStage.show();
             plView = false;
         }

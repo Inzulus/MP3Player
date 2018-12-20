@@ -69,7 +69,7 @@ public class MP3Player {
             timeThread.interrupt();
         timeThread = new Thread() {
             public void run() {
-                                while(true){
+                while(true){
                     System.out.println(audioPlayer.position());
                     currentTime.setTime(audioPlayer.position()/1000);
                     try {
@@ -228,8 +228,15 @@ public class MP3Player {
         isPlayingProperty.set(playing);
     }
 
+    public void setCurrentTrackNumber(int currentTrackNumber) {
+        this.currentTrackNumber = currentTrackNumber;
+    }
+
     //DAVID GUETTA
 
+    public int getCurrentTrackNumber(){
+        return currentTrackNumber;
+    }
     public SimpleBooleanProperty getIsPlayingProperty(){
         return isPlayingProperty;
     }
